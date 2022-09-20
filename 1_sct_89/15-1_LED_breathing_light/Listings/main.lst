@@ -1,0 +1,62 @@
+C51 COMPILER V9.54   MAIN                                                                  12/09/2021 16:03:07 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\Software\Keil\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listing
+                    -s\main.lst) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          /*
+   2           * func: LED breathing light
+   3           * author: h00421956
+   4           * date: 2021.12.9 
+   5           */
+   6          
+   7          #include <REGX52.H>
+   8          
+   9          sbit LED = P2^2;
+  10          
+  11          #define LED_ON 0
+  12          #define LED_OFF 1
+  13          
+  14          void Delay(unsigned int t) {
+  15   1              while(t--);
+  16   1      }
+  17          
+  18          void main() {
+  19   1              unsigned char Time,i;
+  20   1              while(1) {
+  21   2                      for (Time=0; Time < 100; Time++) {              //改变亮灭时间，由暗到亮
+  22   3                              for (i=0; i < 20; i++) {                        //计次延时
+  23   4                                      LED = LED_ON;                                   //LED亮
+  24   4                                      Delay(Time);                    //延时Time, 初始亮的时间最少
+  25   4                                      LED = LED_OFF;                                  //LED灭
+  26   4                                      Delay(100-Time);                //延时100-Time
+  27   4                              }
+  28   3                      }
+  29   2                      for (Time=100; Time > 0; Time--) {      //改变亮灭时间，由亮到暗
+  30   3                              for (i=0; i<20; i++) {                  //计次延时
+  31   4                                      LED = LED_ON;                                   //LED亮
+  32   4                                      Delay(Time);                    //延时Time，初始亮的时间最多
+  33   4                                      LED = LED_OFF;                                  //LED灭
+  34   4                                      Delay(100-Time);                //延时100-Time
+  35   4                              }
+  36   3                      }
+  37   2              }
+  38   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     68    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
