@@ -1,0 +1,4 @@
+".\Objects\main.obj" 
+TO ".\Objects\STC8H8K_demo" 
+
+PRINT(".\Listings\STC8H8K_demo.map") REMOVEUNUSED 
