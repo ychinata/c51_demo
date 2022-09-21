@@ -1,0 +1,89 @@
+C251 COMPILER V5.60.0,  main                                                               21/09/22  14:23:27  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE main
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Program Files\Keil_v5\251\C251\BIN\C251.EXE main.c INTR2 BROWSE DEBUG PRINT(.\Listings\main.lst)
+                    - OBJECT(.\Objects\main.obj) 
+
+stmt  level    source
+
+    1          /*--------------------------------------------------------------*/
+    2          /* --- -----------------实验内容 -------------------------------*/
+    3          /* --- 1-了解STC-ISP工具生产延时函数方法 -----------------------*/
+    4          /* --- 2-掌握子函数的创建与调用---------------------------------*/
+    5          /* --- 实验平台：未来电子STC32核心板----------------------------*/
+    6          /* --- 视频学习：https://space.bilibili.com/494969171 ----------*/
+    7          /* --- QQ交流群：702805632 -------------------------------------*/
+    8          /* --- 参考资料：STC32实验室参考例程 ---------------------------*/
+    9          /*--------------------------------------------------------------*/
+   10          #include <STC32G.H>
+   11          #include "intrins.h"
+   12          
+   13          #define MAIN_Fosc        24000000UL
+   14          
+   15          void Delay1000ms();             //@24.000MHz
+   16          
+   17          
+   18          /********************* 主函数 *************************/
+   19          void main()
+   20          {
+   21   1              WTST = 0;  //设置程序指令延时参数，赋值为0可将CPU执行指令的速度设置为最快
+   22   1              EAXFR = 1; //扩展寄存器(XFR)访问使能
+   23   1              CKCON = 0; //提高访问XRAM速度
+   24   1              
+   25   1              //核心板上LED连接的IO口为P5.3，当IO输出为高电平时，LED点亮
+   26   1              P5M0 = 0x08;        //将P5.3口单独设置为推挽输出模式  0000 1000
+   27   1              P5M1 = 0x00;
+   28   1              
+   29   1              P2M0 = 0x00;
+   30   1              P2M1 = 0x00;
+   31   1                      
+   32   1              while (1) {
+   33   2                      P2 = 0xff;
+   34   2                      Delay1000ms();     //实现效果：每隔1秒LED闪烁
+   35   2                      P2 = 0x00;
+   36   2                      Delay1000ms();     //实现效果：每隔1秒LED闪烁
+   37   2              }
+   38   1      }
+   39          
+   40          void Delay1000ms()              //@24.000MHz
+   41          {
+   42   1              unsigned char i, j, k;
+   43   1              _nop_();
+   44   1              _nop_();
+   45   1              i = 92;
+   46   1              j = 50;
+   47   1              k = 238;
+   48   1              do {
+   49   2                      do {
+   50   3                              while (--k);
+   51   3                      } while (--j);
+   52   2              } while (--i);
+   53   1      }
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =        68     ------
+  ecode size           =    ------     ------
+C251 COMPILER V5.60.0,  main                                                               21/09/22  14:23:27  PAGE 2   
+
+  data size            =    ------     ------
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =    ------     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------     ------
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =    ------     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
