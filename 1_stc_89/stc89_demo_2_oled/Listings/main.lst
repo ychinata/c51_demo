@@ -1,0 +1,105 @@
+C51 COMPILER V9.54   MAIN                                                                  09/20/2022 15:48:37 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Program Files\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.
+                    -\Listings\main.lst) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include <INTRINS.H>
+   3          #include "oled.h"
+   4          //#include "bmp.h"
+   5          // reviewed:2022.9.13
+   6          
+   7          void OLED_DemoByITLaozhai();
+   8          //void OLED_DemoHelloWorld();
+   9          void OLED_DemoFontSize16();
+  10          
+  11          //////////////////////////////////////////////////////////////////////////////////       
+  12          //  ×÷    Õß   : oldZhai
+  13          //  ¹¦ÄÜÃèÊö   : AT89C51 Çý¶¯0.96OLED I2C½Ó¿ÚÆÁÄ»ÏÔÊ¾
+  14          //              ËµÃ÷: 
+  15          //              ----------------------------------------------------------------
+  16          //              GND    µçÔ´µØ
+  17          //              VCC  ½Ó5V»ò3.3vµçÔ´
+  18          //              D0   P1^0£¨SCL£©
+  19          //              D1   P1^1£¨SDA£©      
+  20          //                                                      ÐèÒªÐÞ¸Ä¹Ü½ÅµÄÔÚoled.hÖÐÐÞ¸Ä
+  21          //              ----------------------------------------------------------------
+  22          //https://blog.csdn.net/weixin_45631738/article/details/113703749
+  23          //******************************************************************************/
+  24           int main(void)
+  25           {      
+  26   1          OLED_Init();                        //³õÊ¼»¯OLED  
+  27   1          //ÏÔÊ¾Í¼Æ¬
+  28   1          //OLED_DrawBMP(0,0,128,8,BMP1);  //Í¼Æ¬ÏÔÊ¾(Í¼Æ¬ÏÔÊ¾É÷ÓÃ£¬Éú³ÉµÄ×Ö±í½Ï´ó£¬»áÕ¼ÓÃ½Ï¶à¿Õ¼ä£¬FLASH¿Õ¼ä8KÒ
+             -ÔÏÂÉ÷ÓÃ)
+  29   1          Delay_1ms(2000);
+  30   1          OLED_Clear();
+  31   1               
+  32   1          while(1) {          
+  33   2              OLED_DemoFontSize16();
+  34   2          }     
+  35   1      }
+  36          
+  37          // 2022.9.13
+  38          void OLED_DemoFontSize1()
+  39          {
+  40   1          OLED_ShowString(0,0,"a",1);
+  41   1          OLED_ShowString(8,0,"a",1);
+  42   1          OLED_ShowString(0,1,"b",1); 
+  43   1          OLED_ShowString(0,2,"c",1);
+  44   1          OLED_ShowString(0,3,"d",1);
+  45   1      }
+  46          
+  47          void OLED_DemoFontSize16()
+  48          {
+  49   1          int charSize = 16; // ¿ÉÅÅÁÐ4ÐÐ
+  50   1          // 0ÁÐ0ÐÐ×ÖÌå16
+  51   1          OLED_ShowString(0,0,"Helloworld!",charSize);
+  52   1          OLED_ShowString(0,2,"MyFirstOLEDProg",charSize);
+  53   1          OLED_ShowString(0,4,"BySTC12C5A60S2",charSize);
+C51 COMPILER V9.54   MAIN                                                                  09/20/2022 15:48:37 PAGE 2   
+
+  54   1          OLED_ShowString(0,6,"2022.09.13",charSize);
+  55   1      }
+  56          
+  57          // ÏÔÊ¾ASCIIÂë
+  58          // OLEDµÄ¹â±ê²»ÊÇ°´¼¸ÐÐ¼¸ÁÐÀ´µÄ£¬ÓÃÆðÀ´±È½ÏÂé·³
+  59          void OLED_DemoByITLaozhai()
+  60          {
+  61   1          static u8 t = ' ';
+  62   1          // t=' ';
+  63   1          OLED_ShowString(0,0,"I T",16); 
+  64   1          OLED_ShowCHinese(30,0,0);//ÀÏ
+  65   1          OLED_ShowCHinese(48,0,1);//µÔ
+  66   1      
+  67   1          OLED_ShowString(0,3,"0.96' OLED",16);
+  68   1          OLED_ShowString(0,6,"ASCII:",16);  
+  69   1          OLED_ShowString(63,6,"CODE:",16);  
+  70   1          OLED_ShowChar(48,6,t,16);//ÏÔÊ¾ASCII×Ö·û       
+  71   1          t++;
+  72   1          if(t>'~'){
+  73   2              t=' ';
+  74   2          }
+  75   1          OLED_ShowNum(103,6,t,3,16);//ÏÔÊ¾ASCII×Ö·ûµÄÂëÖµ    
+  76   1          Delay_1ms(10);    
+  77   1      }
+  78          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    295    ----
+   CONSTANT SIZE    =     90    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
