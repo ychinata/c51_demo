@@ -1,10 +1,10 @@
-C51 COMPILER V9.54   MAIN                                                                  09/21/2022 12:53:13 PAGE 1   
+C51 COMPILER V9.54   MAIN                                                                  09/26/2022 15:50:31 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN .\Objects\main.obj
-COMPILER INVOKED BY: C:\Program Files\Keil_v5\C51\BIN\C51.EXE User\main.c LARGE OMF2 OPTIMIZE(8,SPEED) BROWSE DEBUG PRIN
-                    -T(.\Listings\main.lst) OBJECT(.\Objects\main.obj)
+COMPILER INVOKED BY: D:\Software\Keil\C51\BIN\C51.EXE User\main.c LARGE OMF2 OPTIMIZE(8,SPEED) BROWSE DEBUG PRINT(.\List
+                    -ings\main.lst) OBJECT(.\Objects\main.obj)
 
 line level    source
 
@@ -15,94 +15,189 @@ line level    source
    5          //sfr P0M1 = 0x93;
    6          //sfr P0M0 = 0x94;
    7          
-   8          // 
-   9          /*
-  10           * Func:延时函数
-  11           * Author: STC-ISP
-  12           * Date: 2022.9.21
-  13           */
-  14          void Delay1000ms()              //@11.0592MHz
-  15          {
-  16   1              unsigned char i, j, k;
-  17   1      
-  18   1              //_nop_();
-  19   1              //_nop_();
-  20   1              i = 4;
-  21   1              j = 6;
-  22   1              k = 203;
-  23   1              do
-  24   1              {
-  25   2                      do
-  26   2                      {
-  27   3                              while (--k);
-  28   3                      } while (--j);
-  29   2              } while (--i);
-  30   1      }
-  31          
-  32          
-  33          //软延时
-  34          void delay()
-  35          {
-  36   1          int i;
-  37   1          int j;
-  38   1          for (i = 0; i < 10000; i++) {
-  39   2              for (j = 0; j < 1000; j++) {
-  40   3          
-  41   3              }
-  42   2          }
-  43   1      
-  44   1      }
-  45          
-  46          void LED_Flash()
-  47          {
-  48   1              unsigned char i;
-  49   1          P2 = 0x01;
-  50   1          for (i = 0; i < 8; i++) {
-  51   2              P2 = ~(0x01 << i);
-  52   2              //delay();
-  53   2              Delay1000ms();
-  54   2          }
-C51 COMPILER V9.54   MAIN                                                                  09/21/2022 12:53:13 PAGE 2   
+   8          #define uchar unsigned char
+   9          #define uint unsigned int
+  10          #define LED_PORT P2
+  11          
+  12          void LED_WaterfallFancy();
+  13          
+  14          
+  15          void main()
+  16          {
+  17   1          P2M0 = 0x00;    //P2口准双向输入输出
+  18   1          P2M1 = 0x00;    //P2口准双向输入输出
+  19   1          while (1) {
+  20   2              // LED_BlinkSimple();
+  21   2                      LED_WaterfallFancy();
+  22   2          }
+  23   1      }
+  24          
+  25          // 
+  26          /*
+  27           * Func:延时函数
+  28           * Author: STC-ISP
+  29           * Date: 2022.9.21
+  30           */
+  31          void Delay1000ms()              //@11.0592MHz
+  32          {
+  33   1              unsigned char i, j, k;
+  34   1      
+  35   1              //_nop_();
+  36   1              //_nop_();
+  37   1              i = 10; // 4很快
+  38   1              j = 6;
+  39   1              k = 203;
+  40   1              do {
+  41   2                      do {
+  42   3                              while (--k);
+  43   3                      } while (--j);
+  44   2              } while (--i);
+  45   1      }
+  46          
+  47          void Delay500ms()               //@11.0592MHz
+  48          {
+  49   1              unsigned char i, j, k;
+  50   1      
+  51   1              i = 22;
+  52   1              j = 3;
+  53   1              k = 227;
+  54   1              do {
+C51 COMPILER V9.54   MAIN                                                                  09/26/2022 15:50:31 PAGE 2   
 
-  55   1      }
-  56          
-  57          /*
-  58           * Func:闪烁LED灯
-  59           * Author: xy
-  60           * Date: 2022.9.21
-  61           */
-  62          void main1()
-  63          {
-  64   1          //P0M0 = 0x00;    //P0口准双向输入输出
-  65   1          //P0M1 = 0x00;    //P0口准双向输入输出
-  66   1          P2M0 = 0x00;    //P2口准双向输入输出
-  67   1          P2M1 = 0x00;    //P2口准双向输入输出
-  68   1          
-  69   1          while (1) {
-  70   2              P2 = 0x00;
-  71   2              //delay();
-  72   2              Delay1000ms();
-  73   2              P2 = 0xff;
-  74   2              //delay();
-  75   2              Delay1000ms();
-  76   2          }
-  77   1      }
-  78          
-  79          
-  80          void main()
-  81          {
-  82   1          P2M0 = 0x00;    //P2口准双向输入输出
-  83   1          P2M1 = 0x00;    //P2口准双向输入输出
-  84   1          while (1) {
-  85   2              LED_Flash();
-  86   2          }
-  87   1      }
+  55   2                      do {
+  56   3                              while (--k);
+  57   3                      } while (--j);
+  58   2              } while (--i);
+  59   1      }
+  60          
+  61          
+  62          //软延时
+  63          void delay()
+  64          {
+  65   1          int i;
+  66   1          int j;
+  67   1          for (i = 0; i < 10000; i++) {
+  68   2              for (j = 0; j < 1000; j++) {
+  69   3          
+  70   3              }
+  71   2          }
+  72   1      
+  73   1      }
+  74          
+  75          // 暂不采用定时器延时
+  76          void timerDelay()
+  77          {
+  78   1              Delay1000ms();
+  79   1      }
+  80          
+  81          /* 普通流水灯 */
+  82          void LED_Flash()
+  83          {
+  84   1              unsigned char i;
+  85   1          P2 = 0x01;
+  86   1          for (i = 0; i < 8; i++) {
+  87   2              P2 = ~(0x01 << i);
+  88   2              //delay();
+  89   2              Delay1000ms();
+  90   2          }
+  91   1      }
+  92          
+  93          /*
+  94           * Func:闪烁LED灯，全亮全灭
+  95           * Author: xy
+  96           * Date: 2022.9.21
+  97           */
+  98          void LED_BlinkSimple()
+  99          {
+ 100   1          //P0M0 = 0x00;    //P0口准双向输入输出
+ 101   1          //P0M1 = 0x00;    //P0口准双向输入输出
+ 102   1          //P2M0 = 0x00;    //P2口准双向输入输出
+ 103   1          //P2M1 = 0x00;    //P2口准双向输入输出
+ 104   1          int i = 0;
+ 105   1              for (i = 0; i < 5; i++) {
+ 106   2                      P2 = 0x00;
+ 107   2                      //delay();
+ 108   2                      Delay1000ms();
+ 109   2                      P2 = 0xff;
+ 110   2                      //delay();
+ 111   2                      Delay1000ms();  
+ 112   2              }
+ 113   1      }
+ 114          
+ 115          /*
+ 116           * Func:闪烁LED灯，单双交替
+C51 COMPILER V9.54   MAIN                                                                  09/26/2022 15:50:31 PAGE 3   
+
+ 117           * Author: xy
+ 118           * Date: 2022.9.21
+ 119           */
+ 120          void LED_BlinkOddEven()
+ 121          {
+ 122   1          int i = 0;
+ 123   1              for (i = 0; i < 2; i++) {
+ 124   2                      P2 = 0x55;
+ 125   2                      //delay();
+ 126   2                      Delay500ms();
+ 127   2                      P2 = 0xaa;
+ 128   2                      //delay();
+ 129   2                      Delay500ms();
+ 130   2              }       
+ 131   1      }
+ 132          
+ 133          
+ 134          /*
+ 135           * Func：LED花式流水灯
+ 136           * Author: xy
+ 137           * Date: 2022.9.26
+ 138           */
+ 139          void LED_WaterfallFancy()
+ 140          {
+ 141   1              uchar index = 0;//索引
+ 142   1              static uchar initData = 0x00;
+ 143   1      
+ 144   1              //样式1：从左向右流水，从右向左流水
+ 145   1              for (index; index > 7; index++) {
+ 146   2                      LED_PORT = ~(0x01 << index);
+ 147   2                      timerDelay();
+ 148   2              }
+ 149   1              for (index; index > 0; index--) {
+ 150   2                      LED_PORT = ~(0x01 << index);
+ 151   2                      timerDelay();
+ 152   2              }
+ 153   1      
+ 154   1              //样式2：
+ 155   1              for(index = 0;index < 7; index++){
+ 156   2                      LED_PORT = (0xFF & ~(0x01 << index)) & (0xFF & ~(0x80 >> index));
+ 157   2                      timerDelay();
+ 158   2              }
+ 159   1      
+ 160   1              //样式3：
+ 161   1              for(index = 0;index < 8; index++){
+ 162   2                      LED_PORT = ~(initData += 0x01 << index);
+ 163   2                      timerDelay();
+ 164   2              }
+ 165   1              for(;index > 0;index--){
+ 166   2                      LED_PORT = ~(initData -= 0x01 << index);
+ 167   2                      timerDelay();
+ 168   2              }
+ 169   1              
+ 170   1              // 样式4：
+ 171   1              LED_BlinkSimple();
+ 172   1              
+ 173   1              // 样式5：
+ 174   1              LED_BlinkOddEven();
+ 175   1              
+ 176   1              
+ 177   1      }
+ 178          
+C51 COMPILER V9.54   MAIN                                                                  09/26/2022 15:50:31 PAGE 4   
+
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     99    ----
+   CODE SIZE        =    314    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =   ----    ----
+   XDATA SIZE       =      1    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
