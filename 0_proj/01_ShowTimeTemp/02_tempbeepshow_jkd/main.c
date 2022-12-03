@@ -16,15 +16,15 @@ unsigned char KeyNum;
 unsigned char DS1302_Time[6];
 
 /*********************
- * Func.: 时间读取及显示LCD
+ * Func.: 时间读取及显示LCD,显示在第二行
  * Author:普中科技
  * Date:2022.12.3
  *********************/     
-void main3()
+void main1()
 {
 	LCD_Init();
-	LCD_ShowString(1,1,"  -  -  ");//静态字符初始化显示
-	LCD_ShowString(2,1,"  :  :  ");	
+	LCD_ShowString(2,1,"  -  -  ");//静态字符初始化显示
+	LCD_ShowString(2,9,"  :  :  ");	
 	ds1302_init();
 	
 	while(1) {
@@ -37,12 +37,12 @@ void main3()
         DS1302_Time[4]=gDS1302_TIME[0]/16;
         DS1302_Time[5]=gDS1302_TIME[0]&0x0f;     
         
-		LCD_ShowNum(1,1,DS1302_Time[0],2);//显示年
-		LCD_ShowNum(1,4,DS1302_Time[1],2);//显示月
-		LCD_ShowNum(1,7,DS1302_Time[2],2);//显示日
-		LCD_ShowNum(2,1,DS1302_Time[3],2);//显示时
-		LCD_ShowNum(2,4,DS1302_Time[4],2);//显示分
-		LCD_ShowNum(2,7,DS1302_Time[5],2);//显示秒
+		LCD_ShowNum(2,1,DS1302_Time[0],2);//显示年
+		LCD_ShowNum(2,4,DS1302_Time[1],2);//显示月
+		LCD_ShowNum(2,7,DS1302_Time[2],2);//显示日
+		LCD_ShowNum(2,9,DS1302_Time[3],2);//显示时
+		LCD_ShowNum(2,12,DS1302_Time[4],2);//显示分
+		LCD_ShowNum(2,15,DS1302_Time[5],2);//显示秒
         
 	}
 }     
@@ -85,8 +85,15 @@ void main2()
  *********************/
 void main()
 {
+    LCD_Init();
     //DS1302_Init();
     ds1302_init();
+	LCD_ShowString(2,1,"  -  -  ");//静态字符初始化显示
+	LCD_ShowString(2,9,"  :  :  ");	
+	
+
+    
+    
     // 初始化-bgn
 	DS18B20_ConvertT();		//上电先转换一次温度，防止第一次读数据错误
 	Delay(1000);			//等待转换完成
@@ -97,12 +104,12 @@ void main()
 		THigh=20;			//如果阈值非法，则设为默认值
 		TLow=15;
 	}
-	LCD_Init();
+	//LCD_Init();
 	LCD_ShowString(1,1,"T:");
-	LCD_ShowString(2,1,"TH:");
-	LCD_ShowString(2,9,"TL:");
-	LCD_ShowSignedNum(2,4,THigh,3);
-	LCD_ShowSignedNum(2,12,TLow,3);
+//	LCD_ShowString(2,1,"TH:");
+//	LCD_ShowString(2,9,"TL:");
+//	LCD_ShowSignedNum(2,4,THigh,3);
+//	LCD_ShowSignedNum(2,12,TLow,3);
 	Timer0_Init();
 	// 初始化-end
     
@@ -150,8 +157,8 @@ void main()
 				TLow--;
 				if(TLow<-55){TLow=-55;}
 			}
-			LCD_ShowSignedNum(2,4,THigh,3);	//显示阈值数据
-			LCD_ShowSignedNum(2,12,TLow,3);
+//			LCD_ShowSignedNum(2,4,THigh,3);	//显示阈值数据
+//			LCD_ShowSignedNum(2,12,TLow,3);
 			AT24C02_WriteByte(0,THigh);		//写入到At24C02中保存
 			Delay(5);
 			AT24C02_WriteByte(1,TLow);
@@ -165,6 +172,26 @@ void main()
 		} else {
 			LCD_ShowString(1,13,"    ");
 		}
+        
+        // LCD显示时间-bgn
+        ds1302_read_time();
+        DS1302_Time[0]=gDS1302_TIME[2]/16;
+        DS1302_Time[1]=gDS1302_TIME[2]&0x0f;
+        DS1302_Time[2]=gDS1302_TIME[1]/16;
+        DS1302_Time[3]=gDS1302_TIME[1]&0x0f;
+        DS1302_Time[4]=gDS1302_TIME[0]/16;
+        DS1302_Time[5]=gDS1302_TIME[0]&0x0f;     
+        
+		LCD_ShowNum(2,1,DS1302_Time[0],2);//显示年
+		LCD_ShowNum(2,4,DS1302_Time[1],2);//显示月
+		LCD_ShowNum(2,7,DS1302_Time[2],2);//显示日
+		LCD_ShowNum(2,9,DS1302_Time[3],2);//显示时
+		LCD_ShowNum(2,12,DS1302_Time[4],2);//显示分
+		LCD_ShowNum(2,15,DS1302_Time[5],2);//显示秒
+        // LCD显示时间-end        
+        
+        
+        
 	}
 }
 

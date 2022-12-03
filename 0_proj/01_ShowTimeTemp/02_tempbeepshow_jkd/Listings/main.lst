@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   MAIN                                                                  12/03/2022 17:40:34 PAGE 1   
+C51 COMPILER V9.54   MAIN                                                                  12/03/2022 18:10:38 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
@@ -26,15 +26,15 @@ line level    source
   16          unsigned char DS1302_Time[6];
   17          
   18          /*********************
-  19           * Func.: 时间读取及显示LCD
+  19           * Func.: 时间读取及显示LCD,显示在第二行
   20           * Author:普中科技
   21           * Date:2022.12.3
   22           *********************/     
-  23          void main3()
+  23          void main1()
   24          {
   25   1              LCD_Init();
-  26   1              LCD_ShowString(1,1,"  -  -  ");//静态字符初始化显示
-  27   1              LCD_ShowString(2,1,"  :  :  "); 
+  26   1              LCD_ShowString(2,1,"  -  -  ");//静态字符初始化显示
+  27   1              LCD_ShowString(2,9,"  :  :  "); 
   28   1              ds1302_init();
   29   1              
   30   1              while(1) {
@@ -47,12 +47,12 @@ line level    source
   37   2              DS1302_Time[4]=gDS1302_TIME[0]/16;
   38   2              DS1302_Time[5]=gDS1302_TIME[0]&0x0f;     
   39   2              
-  40   2                      LCD_ShowNum(1,1,DS1302_Time[0],2);//显示年
-  41   2                      LCD_ShowNum(1,4,DS1302_Time[1],2);//显示月
-  42   2                      LCD_ShowNum(1,7,DS1302_Time[2],2);//显示日
-  43   2                      LCD_ShowNum(2,1,DS1302_Time[3],2);//显示时
-  44   2                      LCD_ShowNum(2,4,DS1302_Time[4],2);//显示分
-  45   2                      LCD_ShowNum(2,7,DS1302_Time[5],2);//显示秒
+  40   2                      LCD_ShowNum(2,1,DS1302_Time[0],2);//显示年
+  41   2                      LCD_ShowNum(2,4,DS1302_Time[1],2);//显示月
+  42   2                      LCD_ShowNum(2,7,DS1302_Time[2],2);//显示日
+  43   2                      LCD_ShowNum(2,9,DS1302_Time[3],2);//显示时
+  44   2                      LCD_ShowNum(2,12,DS1302_Time[4],2);//显示分
+  45   2                      LCD_ShowNum(2,15,DS1302_Time[5],2);//显示秒
   46   2              
   47   2              }
   48   1      }     
@@ -62,7 +62,7 @@ line level    source
   52           * Author:江科大自化协
   53           * Date:
   54           *********************/
-C51 COMPILER V9.54   MAIN                                                                  12/03/2022 17:40:34 PAGE 2   
+C51 COMPILER V9.54   MAIN                                                                  12/03/2022 18:10:38 PAGE 2   
 
   55          void main2()
   56          {
@@ -97,115 +97,142 @@ line level    source
   85           *********************/
   86          void main()
   87          {
-  88   1          //DS1302_Init();
-  89   1          ds1302_init();
-  90   1          // 初始化-bgn
-  91   1              DS18B20_ConvertT();             //上电先转换一次温度，防止第一次读数据错误
-  92   1              Delay(1000);                    //等待转换完成
-  93   1              THigh=AT24C02_ReadByte(0);      //读取温度阈值数据
-  94   1              TLow=AT24C02_ReadByte(1);
-  95   1              if(THigh>125 || TLow<-55 || THigh<=TLow)
-  96   1              {
-  97   2                      THigh=20;                       //如果阈值非法，则设为默认值
-  98   2                      TLow=15;
-  99   2              }
- 100   1              LCD_Init();
- 101   1              LCD_ShowString(1,1,"T:");
- 102   1              LCD_ShowString(2,1,"TH:");
- 103   1              LCD_ShowString(2,9,"TL:");
- 104   1              LCD_ShowSignedNum(2,4,THigh,3);
- 105   1              LCD_ShowSignedNum(2,12,TLow,3);
- 106   1              Timer0_Init();
- 107   1              // 初始化-end
- 108   1          
- 109   1              while(1)
- 110   1              {
- 111   2                      KeyNum=Key();
- 112   2                      
- 113   2                      /*温度读取及显示*/
- 114   2                      DS18B20_ConvertT();     //转换温度
- 115   2                      T=DS18B20_ReadT();      //读取温度
- 116   2                      if(T<0)                         //如果温度小于0
-C51 COMPILER V9.54   MAIN                                                                  12/03/2022 17:40:34 PAGE 3   
+  88   1          LCD_Init();
+  89   1          //DS1302_Init();
+  90   1          ds1302_init();
+  91   1              LCD_ShowString(2,1,"  -  -  ");//静态字符初始化显示
+  92   1              LCD_ShowString(2,9,"  :  :  "); 
+  93   1              
+  94   1      
+  95   1          
+  96   1          
+  97   1          // 初始化-bgn
+  98   1              DS18B20_ConvertT();             //上电先转换一次温度，防止第一次读数据错误
+  99   1              Delay(1000);                    //等待转换完成
+ 100   1              THigh=AT24C02_ReadByte(0);      //读取温度阈值数据
+ 101   1              TLow=AT24C02_ReadByte(1);
+ 102   1              if(THigh>125 || TLow<-55 || THigh<=TLow)
+ 103   1              {
+ 104   2                      THigh=20;                       //如果阈值非法，则设为默认值
+ 105   2                      TLow=15;
+ 106   2              }
+ 107   1              //LCD_Init();
+ 108   1              LCD_ShowString(1,1,"T:");
+ 109   1      //      LCD_ShowString(2,1,"TH:");
+ 110   1      //      LCD_ShowString(2,9,"TL:");
+ 111   1      //      LCD_ShowSignedNum(2,4,THigh,3);
+ 112   1      //      LCD_ShowSignedNum(2,12,TLow,3);
+ 113   1              Timer0_Init();
+ 114   1              // 初始化-end
+ 115   1          
+ 116   1              while(1)
+C51 COMPILER V9.54   MAIN                                                                  12/03/2022 18:10:38 PAGE 3   
 
- 117   2                      {
- 118   3                              LCD_ShowChar(1,3,'-');  //显示负号
- 119   3                              TShow=-T;               //将温度变为正数
- 120   3                      }
- 121   2                      else                            //如果温度大于等于0
- 122   2                      {
- 123   3                              LCD_ShowChar(1,3,'+');  //显示正号
- 124   3                              TShow=T;
- 125   3                      }
- 126   2                      LCD_ShowNum(1,4,TShow,3);               //显示温度整数部分
- 127   2                      LCD_ShowChar(1,7,'.');          //显示小数点
- 128   2                      LCD_ShowNum(1,8,(unsigned long)(TShow*100)%100,2);//显示温度小数部分
- 129   2                      
- 130   2                      /*阈值判断及显示*/
- 131   2                      if(KeyNum)
- 132   2                      {
- 133   3                              if(KeyNum==1)   //K1按键，THigh自增
- 134   3                              {
- 135   4                                      THigh++;
- 136   4                                      if(THigh>125){THigh=125;}
- 137   4                              }
- 138   3                              if(KeyNum==2)   //K2按键，THigh自减
- 139   3                              {
- 140   4                                      THigh--;
- 141   4                                      if(THigh<=TLow){THigh++;}
- 142   4                              }
- 143   3                              if(KeyNum==3)   //K3按键，TLow自增
- 144   3                              {
- 145   4                                      TLow++;
- 146   4                                      if(TLow>=THigh){TLow--;}
- 147   4                              }
- 148   3                              if(KeyNum==4)   //K4按键，TLow自减
- 149   3                              {
- 150   4                                      TLow--;
- 151   4                                      if(TLow<-55){TLow=-55;}
- 152   4                              }
- 153   3                              LCD_ShowSignedNum(2,4,THigh,3); //显示阈值数据
- 154   3                              LCD_ShowSignedNum(2,12,TLow,3);
- 155   3                              AT24C02_WriteByte(0,THigh);             //写入到At24C02中保存
- 156   3                              Delay(5);
- 157   3                              AT24C02_WriteByte(1,TLow);
- 158   3                              Delay(5);
- 159   3                      }
- 160   2              //越界判断
- 161   2                      if (T>THigh) {
- 162   3                              LCD_ShowString(1,13,"OV:H");
- 163   3                      } else if(T<TLow) {
- 164   3                              LCD_ShowString(1,13,"OV:L");
- 165   3                      } else {
- 166   3                              LCD_ShowString(1,13,"    ");
- 167   3                      }
- 168   2              }
- 169   1      }
- 170          
- 171          /*********************
- 172           * Func.: 按键扫描中断
- 173           * Author:江科大自化协
- 174           * Date:
- 175           *********************/
- 176          void Timer0_Routine() interrupt 1
- 177          {
- 178   1              static unsigned int T0Count;
-C51 COMPILER V9.54   MAIN                                                                  12/03/2022 17:40:34 PAGE 4   
+ 117   1              {
+ 118   2                      KeyNum=Key();
+ 119   2                      
+ 120   2                      /*温度读取及显示*/
+ 121   2                      DS18B20_ConvertT();     //转换温度
+ 122   2                      T=DS18B20_ReadT();      //读取温度
+ 123   2                      if(T<0)                         //如果温度小于0
+ 124   2                      {
+ 125   3                              LCD_ShowChar(1,3,'-');  //显示负号
+ 126   3                              TShow=-T;               //将温度变为正数
+ 127   3                      }
+ 128   2                      else                            //如果温度大于等于0
+ 129   2                      {
+ 130   3                              LCD_ShowChar(1,3,'+');  //显示正号
+ 131   3                              TShow=T;
+ 132   3                      }
+ 133   2                      LCD_ShowNum(1,4,TShow,3);               //显示温度整数部分
+ 134   2                      LCD_ShowChar(1,7,'.');          //显示小数点
+ 135   2                      LCD_ShowNum(1,8,(unsigned long)(TShow*100)%100,2);//显示温度小数部分
+ 136   2                      
+ 137   2                      /*阈值判断及显示*/
+ 138   2                      if(KeyNum)
+ 139   2                      {
+ 140   3                              if(KeyNum==1)   //K1按键，THigh自增
+ 141   3                              {
+ 142   4                                      THigh++;
+ 143   4                                      if(THigh>125){THigh=125;}
+ 144   4                              }
+ 145   3                              if(KeyNum==2)   //K2按键，THigh自减
+ 146   3                              {
+ 147   4                                      THigh--;
+ 148   4                                      if(THigh<=TLow){THigh++;}
+ 149   4                              }
+ 150   3                              if(KeyNum==3)   //K3按键，TLow自增
+ 151   3                              {
+ 152   4                                      TLow++;
+ 153   4                                      if(TLow>=THigh){TLow--;}
+ 154   4                              }
+ 155   3                              if(KeyNum==4)   //K4按键，TLow自减
+ 156   3                              {
+ 157   4                                      TLow--;
+ 158   4                                      if(TLow<-55){TLow=-55;}
+ 159   4                              }
+ 160   3      //                      LCD_ShowSignedNum(2,4,THigh,3); //显示阈值数据
+ 161   3      //                      LCD_ShowSignedNum(2,12,TLow,3);
+ 162   3                              AT24C02_WriteByte(0,THigh);             //写入到At24C02中保存
+ 163   3                              Delay(5);
+ 164   3                              AT24C02_WriteByte(1,TLow);
+ 165   3                              Delay(5);
+ 166   3                      }
+ 167   2              //越界判断
+ 168   2                      if (T>THigh) {
+ 169   3                              LCD_ShowString(1,13,"OV:H");
+ 170   3                      } else if(T<TLow) {
+ 171   3                              LCD_ShowString(1,13,"OV:L");
+ 172   3                      } else {
+ 173   3                              LCD_ShowString(1,13,"    ");
+ 174   3                      }
+ 175   2              
+ 176   2              // LCD显示时间-bgn
+ 177   2              ds1302_read_time();
+ 178   2              DS1302_Time[0]=gDS1302_TIME[2]/16;
+C51 COMPILER V9.54   MAIN                                                                  12/03/2022 18:10:38 PAGE 4   
 
- 179   1              TL0 = 0x18;             //设置定时初值
- 180   1              TH0 = 0xFC;             //设置定时初值
- 181   1              T0Count++;
- 182   1              if(T0Count>=20)
- 183   1              {
- 184   2                      T0Count=0;
- 185   2                      Key_Loop();     //每20ms调用一次按键驱动函数
- 186   2              }
- 187   1      }
+ 179   2              DS1302_Time[1]=gDS1302_TIME[2]&0x0f;
+ 180   2              DS1302_Time[2]=gDS1302_TIME[1]/16;
+ 181   2              DS1302_Time[3]=gDS1302_TIME[1]&0x0f;
+ 182   2              DS1302_Time[4]=gDS1302_TIME[0]/16;
+ 183   2              DS1302_Time[5]=gDS1302_TIME[0]&0x0f;     
+ 184   2              
+ 185   2                      LCD_ShowNum(2,1,DS1302_Time[0],2);//显示年
+ 186   2                      LCD_ShowNum(2,4,DS1302_Time[1],2);//显示月
+ 187   2                      LCD_ShowNum(2,7,DS1302_Time[2],2);//显示日
+ 188   2                      LCD_ShowNum(2,9,DS1302_Time[3],2);//显示时
+ 189   2                      LCD_ShowNum(2,12,DS1302_Time[4],2);//显示分
+ 190   2                      LCD_ShowNum(2,15,DS1302_Time[5],2);//显示秒
+ 191   2              // LCD显示时间-end        
+ 192   2              
+ 193   2              
+ 194   2              
+ 195   2              }
+ 196   1      }
+ 197          
+ 198          /*********************
+ 199           * Func.: 按键扫描中断
+ 200           * Author:江科大自化协
+ 201           * Date:
+ 202           *********************/
+ 203          void Timer0_Routine() interrupt 1
+ 204          {
+ 205   1              static unsigned int T0Count;
+ 206   1              TL0 = 0x18;             //设置定时初值
+ 207   1              TH0 = 0xFC;             //设置定时初值
+ 208   1              T0Count++;
+ 209   1              if(T0Count>=20)
+ 210   1              {
+ 211   2                      T0Count=0;
+ 212   2                      Key_Loop();     //每20ms调用一次按键驱动函数
+ 213   2              }
+ 214   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    920    ----
-   CONSTANT SIZE    =     44    ----
+   CODE SIZE        =    971    ----
+   CONSTANT SIZE    =     36    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =     19    ----
