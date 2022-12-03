@@ -7,4 +7,5 @@ https://blog.csdn.net/weixin_46045546/article/details/117135637
 
 TODO:
 1.重构代码，尤其是main和ds1302_pz.c
-
+2.添加DHT11
+3.通过按键进行温度、时间切屏显示
