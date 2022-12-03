@@ -1,6 +1,12 @@
 #include <REGX52.H>
 #include "OneWire.h"
 
+/*********************
+ * Func.: 温度模块DS18B20
+ * FileAuthor:江科大自化协
+ * Date:
+ *********************/
+
 //DS18B20指令
 #define DS18B20_SKIP_ROM			0xCC
 #define DS18B20_CONVERT_T			0x44

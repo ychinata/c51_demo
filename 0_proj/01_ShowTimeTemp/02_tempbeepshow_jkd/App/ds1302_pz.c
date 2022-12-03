@@ -1,6 +1,12 @@
 #include "ds1302_pz.h"
 #include "intrins.h"
 
+/*********************
+ * Func.: 时钟模块DS1302
+ * FileAuthor:普中科技
+ * Date:
+ *********************/
+ 
 typedef unsigned int u16;	//对系统默认数据类型进行重定义
 typedef unsigned char u8;
 
