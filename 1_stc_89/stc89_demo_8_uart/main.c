@@ -3,31 +3,34 @@
 #include "UART.h"
 #include "LCD1602.h"
 
-unsigned char RXdata;
 
+// 配置修改：UART_Init
+
+/**
+  * @brief  : 串口通信
+                通过串口控制LED灯，发送1-8点亮对应的LED，
+                发送0点亮全部，发送其它熄灭全部
+  * @author : xy
+  * @date   : 2022.12.16
+  * @history:
+  */
 void main()
 {
 	LCD_Init();
  	UART_Init();		//串口初始化
-    P2=~0xff;
+    
+    LCD_ShowString(1, 1, "Light Led:");
+    
 	while(1){
-		if(RXdata==0xd){
-			P2=~0x01;
-		}else if(RXdata==2){
-			P2=~0x02;
-		}else{}
+        // 点亮第1-8个LED
+		if (rxData >=1 && rxData <= 8){
+			P2 = ~(0x01<<(rxData-1));    
+        } else if (rxData == 0) { // 全部点亮
+            P2 = ~0xff;            
+		} else { // 全部熄灭
+            P2 = ~0x00;
+        }
 	}
 }
 
-void UART_Routine() interrupt 4	//串口专用中断4
-{
-	if(RI==1)					//如果接收标志位为1，接收到了数据
-	{
-//		P2=SBUF;				//读取数据，取反后输出到LED
-		RXdata=SBUF;
-		UART_SendByte(RXdata);
-		LCD_ShowHexNum(1,1,RXdata,2);						//将受到的数据发回串口
-		RI=0;					//接收标志位清0
-		
-	}
-}
+

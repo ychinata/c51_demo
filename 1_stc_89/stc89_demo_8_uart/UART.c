@@ -1,5 +1,22 @@
 #include <REGX52.H>
+#include "LCD1602.h"
 
+unsigned char rxData = 0;
+
+void UART_Init_11M0592_1200BPS(void);
+void UART_Init_11M0592_2400BPS(void);
+void UART_Init_11M0592_4800BPS(void);
+void UART_Init_11M0592_9600BPS(void);
+void UART_Init_12M_4800BPS(void);
+
+void UART_Init(void)
+{
+    //UART_Init_11M0592_1200BPS();
+    //UART_Init_11M0592_2400BPS();
+    //UART_Init_11M0592_4800BPS();
+    //UART_Init_11M0592_9600BPS();
+    UART_Init_12M_4800BPS();
+}
 
 void UART_Init_11M0592_1200BPS(void)		//1200bps@11.0592MHz
 {
@@ -34,8 +51,8 @@ void UART_Init_11M0592_2400BPS(void)		//2400bps@11.0592MHz
 	ES=1;			//打开串口中断    
 }
 
-
-void UART_Init_11M0592_4800BPS()///串口初始化，4800bps@11.0592MHz
+// 普中开发板可用
+void UART_Init_11M0592_4800BPS(void)///串口初始化，4800bps@11.0592MHz
 {
 	SCON = 0x50;	//8位数据,可变波特率
 	PCON |= 0x80;	//使能波特率倍速位SMOD
@@ -52,10 +69,11 @@ void UART_Init_11M0592_4800BPS()///串口初始化，4800bps@11.0592MHz
 
 /**
   * @brief  串口初始化，9600bps@11.0592MHz
+            普中开发板可用
   * @param  无
   * @retval 无
   */
-void UART_Init_11M0592_9600BPS()		
+void UART_Init_11M0592_9600BPS(void)		
 {
 	PCON |= 0x80;		//使能波特率倍速位SMOD
 	SCON = 0x50;		//8位数据,可变波特率
@@ -69,6 +87,12 @@ void UART_Init_11M0592_9600BPS()
 	ES=1;			//打开串口中断
 }
 
+/**
+  * @brief  : 串口通信
+  * @author : 江科大自化协
+  * @date   : 2020
+  * @history:
+  */
 void UART_Init_12M_4800BPS(void)		//4800bps@12.000MHz
 {
 	PCON |= 0x80;		//使能波特率倍速位SMOD
@@ -83,17 +107,6 @@ void UART_Init_12M_4800BPS(void)		//4800bps@12.000MHz
 	TR1 = 1;		//定时器1开始计时
 	EA=1;			//打开总中断
 	ES=1;			//打开串口中断    
-}
-
-
-
-void UART_Init(void)
-{
-    //UART_Init_11M0592_1200BPS();
-    //UART_Init_11M0592_2400BPS();
-    //UART_Init_11M0592_4800BPS();
-    //UART_Init_11M0592_9600BPS();
-    UART_Init_12M_4800BPS();
 }
 
 /**
@@ -118,3 +131,16 @@ void UART_Routine() interrupt 4
 	}
 }
 */
+void UART_Routine() interrupt 4	//串口专用中断4
+{
+    //LCD_ShowString(1, 1, "Light Led:");//放在main函数while循环外
+    //如果接收标志位为1，接收到了数据
+	if (RI==1) {
+//		P2=SBUF;				//读取数据，取反后输出到LED
+		rxData = SBUF;
+        //将收到的数据发回串口
+		UART_SendByte(rxData);
+		LCD_ShowHexNum(1, 11, rxData, 2);						
+		RI = 0;					//接收标志位清0		
+	}
+}

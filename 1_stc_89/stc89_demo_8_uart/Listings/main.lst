@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   MAIN                                                                  12/16/2022 21:18:33 PAGE 1   
+C51 COMPILER V9.54   MAIN                                                                  12/17/2022 10:26:02 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
@@ -13,42 +13,42 @@ line level    source
    3          #include "UART.h"
    4          #include "LCD1602.h"
    5          
-   6          unsigned char RXdata;
-   7          
-   8          void main()
-   9          {
-  10   1              LCD_Init();
-  11   1              UART_Init();            //串口初始化
-  12   1          P2=~0xff;
-  13   1              while(1){
-  14   2                      if(RXdata==0xd){
-  15   3                              P2=~0x01;
-  16   3                      }else if(RXdata==2){
-  17   3                              P2=~0x02;
-  18   3                      }else{}
-  19   2              }
-  20   1      }
-  21          
-  22          void UART_Routine() interrupt 4 //串口专用中断4
-  23          {
-  24   1              if(RI==1)                                       //如果接收标志位为1，接收到了数据
-  25   1              {
-  26   2      //              P2=SBUF;                                //读取数据，取反后输出到LED
-  27   2                      RXdata=SBUF;
-  28   2                      UART_SendByte(RXdata);
-  29   2                      LCD_ShowHexNum(1,1,RXdata,2);                                           //将受到的数据发回串口
-  30   2                      RI=0;                                   //接收标志位清0
-  31   2                      
-  32   2              }
-  33   1      }
+   6          /**
+   7            * @brief  : 串口通信
+   8                          通过串口控制LED灯，发送1-8点亮对应的LED，
+   9                          发送0点亮全部，发送其它熄灭全部
+  10            * @author : xy
+  11            * @date   : 2022.12.16
+  12            * @history:
+  13            */
+  14          void main()
+  15          {
+  16   1              LCD_Init();
+  17   1              UART_Init();            //串口初始化
+  18   1          
+  19   1          LCD_ShowString(1, 1, "Light Led:");
+  20   1          
+  21   1              while(1){
+  22   2              // 点亮第1-8个LED
+  23   2                      if (rxData >=1 && rxData <= 8){
+  24   3                              P2 = ~(0x01<<(rxData-1));    
+  25   3              } else if (rxData == 0) { // 全部点亮
+  26   3                  P2 = ~0xff;            
+  27   3                      } else { // 全部熄灭
+  28   3                  P2 = ~0x00;
+  29   3              }
+  30   2              }
+  31   1      }
+  32          
+  33          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    113    ----
-   CONSTANT SIZE    =   ----    ----
+   CODE SIZE        =     66    ----
+   CONSTANT SIZE    =     11    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      1    ----
+   DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
