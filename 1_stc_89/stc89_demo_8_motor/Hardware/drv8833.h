@@ -4,6 +4,9 @@
 #ifndef __DRV8833_H
 #define __DRV8833_H
 
+extern unsigned int g_count;
+extern unsigned int g_motor_speed;
+
 /*
 // DRV8833 - 51µ¥Æ¬»ú 
 

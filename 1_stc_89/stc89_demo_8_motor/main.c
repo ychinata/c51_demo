@@ -1,13 +1,10 @@
 #include <REGX52.H>
 #include <INTRINS.H> 
+#include "car_mecanum.h"
 #include "delay.h"
 #include "drv8833.h"
 #include "oled.h"
 #include "servo.h"
-
-
-extern unsigned int g_count;
-extern unsigned int g_motor_speed;
 
 
 //2023.6.20
@@ -30,10 +27,10 @@ void main(void)
 //    SERVO_Init();    
  
         
-    while(1)		       /*ÎÞÏÞÑ­»·*/
-    {       
+    while(1) {           
         //SERVO_Task();
-        DRV8833_Task();
+        //DRV8833_Task();
+        CAR_MEC_Task();
                
     }
 
