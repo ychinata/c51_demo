@@ -17,11 +17,13 @@ void main(void)
     OLED_Init();			//初始化OLED  
     OLED_Clear(); 		//清屏函数
     OLED_ShowString(0,0,"DC Motor Demo",16);  
-    OLED_ShowString(6,3,"2023.6.24",16);  
+    OLED_ShowString(0,3,"Gear ",16);  
+    //OLED_ShowString(50,3,"1",16);    
+    //OLED_ShowString(0,6,"2023.6.24",16); 
     
     // 直流电机
     DRV8833_Init();
-    g_motor_speed = 0;
+    //g_motor_speed = 0;
     
     //舵机
 //    Timer0_Init();
@@ -32,9 +34,7 @@ void main(void)
     {       
         //SERVO_Task();
         DRV8833_Task();
-        
-
-        
+               
     }
 
 }

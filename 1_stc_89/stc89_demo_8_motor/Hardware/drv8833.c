@@ -2,6 +2,7 @@
 #include <REGX52.H>
 #include "delay.h"
 #include "drv8833.h"
+#include "oled.h"
 
 unsigned int g_count = 0;
 unsigned int g_motor_speed = 0;
@@ -63,7 +64,7 @@ void DRV8833_Init(void)
     DRV8833_2_Forward();
     //DRV8833_2_Backward();
     DRV8833_Timer0_Init();
-    g_motor_speed = 100;
+    g_motor_speed = 0;
     
 }
 
@@ -71,12 +72,16 @@ void DRV8833_Task(void)
 {
     //DRV8833_1_Forward(); 
     int i = 0;
+    int gear = 0;
     // 10级逐级调速
     for (i = 0; i < 10; i++) {
         g_motor_speed += 10;
         if (g_motor_speed >= 100) {
             g_motor_speed = 0;
         }
+        gear = g_motor_speed / 10;
+        //显示档位
+        OLED_ShowNum(50,3,gear,2,16);
         DELAY_ms(5000);
     }
     
@@ -109,9 +114,7 @@ void time1()interrupt 3 using 2 // using可以不用
         DRV8833_1_BIN1 = 0;
         DRV8833_2_AIN1 = 0;
         DRV8833_2_BIN1 = 0;              
-    }
-     
-    
+    }        
 }
 
 // 定时器0初始化

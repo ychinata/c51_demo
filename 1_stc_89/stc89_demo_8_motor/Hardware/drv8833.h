@@ -1,5 +1,5 @@
+//2023.6.24
 #include <REGX52.H>
-//#include "drv8833.h"
 
 #ifndef __DRV8833_H
 #define __DRV8833_H
@@ -17,7 +17,7 @@
     
  */
 
-sbit DRV8833_1_AIN2 = P3^1;
+sbit DRV8833_1_AIN2 = P3^6; // P3.0,P3.1是串口，不可使用.浪费了很多时间调试才发现这个问题...
 sbit DRV8833_1_AIN1 = P3^2;         
 sbit DRV8833_1_STBY = P3^3;
 sbit DRV8833_1_BIN1 = P3^4;
