@@ -21,36 +21,20 @@ void main(void)
     
     // 直流电机
     DRV8833_Init();
+    g_motor_speed = 0;
     
     //舵机
 //    Timer0_Init();
 //    SERVO_Init();    
-    g_motor_speed = 50;    
+ 
         
     while(1)		       /*无限循环*/
     {       
         //SERVO_Task();
-        //DRV8833_Task();
-        DRV8833_2_Forward();
-        DELAY_ms(2000);
-        DRV8833_2_Backward();
-//        DRV8833_1_Stop();
-        DELAY_ms(2000);
+        DRV8833_Task();
         
-//        g_count++;        
-//        if(g_count >= 0 && g_count <= g_motor_speed)
-//        {
-//            // 正转
-//            DRV8833_1_Forward();
-//            
-//        } else {
-//            // 正转
-//            DRV8833_1_Stop();
-//        }
-//        if(g_count==100)  {      
-//            g_count=0;           
-//        }
-//        DELAY_ms(10);
+
+        
     }
 
 }

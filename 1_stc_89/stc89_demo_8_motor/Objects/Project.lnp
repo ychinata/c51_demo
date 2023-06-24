@@ -1,6 +1,0 @@
-".\Objects\main.obj",
-".\Objects\oled.obj",
-".\Objects\delay.obj",
-".\Objects\drv8833.obj" 
-TO ".\Objects\Project" 
-PRINT(".\Listings\Project.m51") RAMSIZE(256) 
