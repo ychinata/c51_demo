@@ -1,5 +1,6 @@
 #include "delay.h"
 
+// STC12C5A60S2 晶振为11.0592MHz, 此delay不准确，待修改-2023.6.25
 void DELAY_ms(unsigned int xms)
 {
 	unsigned char i, j;

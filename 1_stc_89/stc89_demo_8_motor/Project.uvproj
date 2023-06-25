@@ -311,7 +311,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\Hardware</IncludePath>
+              <IncludePath>.\Hardware;.\App</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -377,6 +377,11 @@
               <FileName>delay.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>car_mecanum_wheel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\App\car_mecanum_wheel.c</FilePath>
             </File>
           </Files>
         </Group>

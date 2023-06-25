@@ -273,6 +273,7 @@ void OLED_ShowNum(u8 x,u8 y,u32 num,u8 len,u8 size2)
 } 
 
 //显示一个字符号串
+// 这个x, y偏移很难用，待修改为几行几列式，并固定字体大小2023.6.25
 void OLED_ShowString(u8 x,u8 y,u8 *chr,u8 Char_Size)
 {
 	unsigned char j=0;

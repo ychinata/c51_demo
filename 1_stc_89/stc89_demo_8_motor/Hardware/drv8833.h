@@ -20,12 +20,18 @@ extern unsigned int g_motor_speed;
     
  */
 
+// 根据2轮或4轮驱动，可灵活修改以下映射
+// #define MOTOR_LF_PIN1 DRV8833_1_AIN1
+// #define MOTOR_LF_PIN2 DRV8833_1_AIN2
+// #define MOTOR_LB_PIN1 DRV8833_1_BIN1
+// #define MOTOR_RF_PIN1 DRV8833_2_AIN1
+// #define MOTOR_RB_PIN1 DRV8833_2_BIN1
+
 sbit DRV8833_1_AIN2 = P3^6; // P3.0,P3.1是串口，不可使用.浪费了很多时间调试才发现这个问题...
 sbit DRV8833_1_AIN1 = P3^2;         
 sbit DRV8833_1_STBY = P3^3;
 sbit DRV8833_1_BIN1 = P3^4;
-sbit DRV8833_1_BIN2 = P3^5;
-//sbit beep=P2^7;  
+sbit DRV8833_1_BIN2 = P3^5; 
 
 sbit DRV8833_2_AIN2 = P1^1;
 sbit DRV8833_2_AIN1 = P1^2;         
@@ -43,6 +49,16 @@ void DRV8833_1_Stop(void);
 void DRV8833_2_Forward(void);
 void DRV8833_2_Backward(void);
 void DRV8833_2_Stop(void);
+
+// 单轮控制
+void DRV8833_LF_Forward(void);
+void DRV8833_LB_Forward(void);
+void DRV8833_LF_Backward(void);
+void DRV8833_LB_Backward(void);
+void DRV8833_RF_Forward(void);
+void DRV8833_RB_Forward(void);
+void DRV8833_RF_Backward(void);
+void DRV8833_RB_Backward(void);
 
 void DRV8833_Task(void);
 

@@ -72,6 +72,67 @@ void DRV8833_2_Stop(void)
     DRV8833_2_STBY = 0;
 }
 
+#if 1 // 单轮控制-bgn
+
+void DRV8833_LF_Forward(void)
+{
+    DRV8833_1_AIN1 = 1;
+    DRV8833_1_AIN2 = 0;
+    g_motor_clokwiseflag_lf = 1; 
+}
+
+void DRV8833_LB_Forward(void)
+{
+    DRV8833_1_BIN1 = 1;
+    DRV8833_1_BIN2 = 0;   
+    g_motor_clokwiseflag_lb = 1;    
+}
+
+void DRV8833_LF_Backward(void)
+{    
+    DRV8833_1_AIN1 = 0;
+    DRV8833_1_AIN2 = 1;
+    g_motor_clokwiseflag_lf = 0;
+}
+
+void DRV8833_LB_Backward(void)
+{    
+    DRV8833_1_BIN1 = 0;
+    DRV8833_1_BIN2 = 1;   
+    g_motor_clokwiseflag_lb = 0;    
+}
+
+void DRV8833_RF_Forward(void)
+{    
+    DRV8833_2_AIN1 = 0;
+    DRV8833_2_AIN2 = 1;
+    g_motor_clokwiseflag_rf = 1;
+}
+
+void DRV8833_RB_Forward(void)
+{    
+    DRV8833_2_BIN1 = 0;
+    DRV8833_2_BIN2 = 1;   
+    g_motor_clokwiseflag_rb = 1;    
+}
+
+void DRV8833_RF_Backward(void)
+{    
+    DRV8833_2_AIN1 = 1;
+    DRV8833_2_AIN2 = 0;
+    g_motor_clokwiseflag_rf = 0;
+}
+
+void DRV8833_RB_Backward(void)
+{    
+    DRV8833_2_BIN1 = 1;
+    DRV8833_2_BIN2 = 0;   
+    g_motor_clokwiseflag_rb = 0;      
+}
+
+
+#endif // 单轮控制-end
+
 void DRV8833_Init(void)
 {
     DRV8833_1_Forward();
@@ -79,6 +140,9 @@ void DRV8833_Init(void)
     //DRV8833_2_Backward();
     DRV8833_Timer0_Init();
     g_motor_speed = 20;     // 速度较慢
+    //开启电机驱动使能
+    DRV8833_1_STBY = 1; 
+    DRV8833_2_STBY = 1; 
     
 }
 
