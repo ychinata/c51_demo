@@ -214,8 +214,8 @@
       <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\App\car_mecanum_wheel.c</PathWithFileName>
-      <FilenameWithoutPath>car_mecanum_wheel.c</FilenameWithoutPath>
+      <PathWithFileName>.\App\car_mecanum.c</PathWithFileName>
+      <FilenameWithoutPath>car_mecanum.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

@@ -379,9 +379,9 @@
               <FilePath>.\delay.c</FilePath>
             </File>
             <File>
-              <FileName>car_mecanum_wheel.c</FileName>
+              <FileName>car_mecanum.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\App\car_mecanum_wheel.c</FilePath>
+              <FilePath>.\App\car_mecanum.c</FilePath>
             </File>
           </Files>
         </Group>
