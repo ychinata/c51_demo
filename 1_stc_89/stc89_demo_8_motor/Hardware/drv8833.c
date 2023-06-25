@@ -229,13 +229,41 @@ void time1()interrupt 3 using 2 // using可以不用
     } 
 }
 
-// 定时器0初始化
+// 定时器0初始化 //100US定时
 void DRV8833_Timer0_Init() 
 {
-	TMOD=0X10;
-	TH1=(65536-100)/256;	  //100US定时
-	TL1=(65536-100)%256;
+	TMOD=0X10;              //设置定时器模式
+	TH1=(65536-100)/256;	//设置定时初值 
+	TL1=(65536-100)%256;    //设置定时初值
 	TR1= 1;
 	ET1= 1;
 	EA = 1;
 }
+
+//供参考
+//void Timer0_Init(void)
+//{
+//	TMOD &= 0xF0;		//设置定时器模式
+//	TMOD |= 0x01;		//设置定时器模式
+//	TL0 = 0x9C;		//设置定时初值
+//	TH0 = 0xFF;		//设置定时初值
+//	TF0 = 0;		//清除TF0标志
+//	TR0 = 1;		//定时器0开始计时
+//	ET0=1;
+//	EA=1;
+//	PT0=0;
+//}
+/*定时器中断函数模板
+void Timer0_Routine() interrupt 1
+{
+	static unsigned int T0Count;
+	TL0 = 0x9C;		//设置定时初值
+	TH0 = 0xFF;		//设置定时初值
+	T0Count++;
+	if(T0Count>=1000)
+	{
+		T0Count=0;
+		
+	}
+}
+*/
