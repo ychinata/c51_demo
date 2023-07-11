@@ -1,0 +1,155 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        07/11/2023  21:52:07  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\SOFTWARE\KEIL\KEIL_C51\C51\BIN\BL51.EXE .\Objects\main.obj TO .\Objects\Project PRINT (.\Listings\Project.m51) RAMSIZ
+>> E (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\main.obj (MAIN)
+  D:\SOFTWARE\KEIL\KEIL_C51\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\SOFTWARE\KEIL\KEIL_C51\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\Project (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000CH     UNIT         ?DT?MAIN
+            IDATA   0014H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     008CH     UNIT         ?C_C51STARTUP
+            CODE    008FH     0041H     UNIT         ?PR?LED4_DISPLAY?MAIN
+            CODE    00D0H     0023H     UNIT         ?CO?MAIN
+            CODE    00F3H     0021H     UNIT         ?PR?_LED_OUT?MAIN
+            CODE    0114H     0011H     UNIT         ?PR?MAIN?MAIN
+            CODE    0125H     0007H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\Project (MAIN)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN
+  +--> ?PR?LED4_DISPLAY?MAIN
+
+?PR?LED4_DISPLAY?MAIN
+  +--> ?CO?MAIN
+  +--> ?PR?_LED_OUT?MAIN
+
+?PR?_LED_OUT?MAIN
+  +--> ?CO?MAIN
+
+
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/11/2023  21:52:07  PAGE 2
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\Project (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0008H         PUBLIC        disbuf
+  D:0090H         PUBLIC        P1
+  C:00DAH         PUBLIC        segbit
+  B:0090H.1       PUBLIC        NIXIE_RCLK
+  B:0090H.2       PUBLIC        NIXIE_SCLK
+  C:0114H         PUBLIC        main
+  C:00D0H         PUBLIC        fseg
+  C:00E2H         PUBLIC        LED_0F
+  C:00FDH         PUBLIC        _LED_OUT
+  B:0090H.0       PUBLIC        NIXIE_DIO
+  C:008FH         PUBLIC        LED4_Display
+  D:000CH         PUBLIC        LED
+  -------         PROC          MAIN
+  C:0114H         LINE#         30
+  C:0114H         LINE#         31
+  C:0114H         LINE#         33
+  C:0117H         LINE#         34
+  C:011AH         LINE#         35
+  C:011DH         LINE#         36
+  C:0120H         LINE#         38
+  C:0120H         LINE#         39
+  C:0120H         LINE#         40
+  C:0123H         LINE#         41
+  -------         ENDPROC       MAIN
+  -------         PROC          LED4_DISPLAY
+  -------         DO            
+  D:0082H         SYMBOL        led_table
+  D:0007H         SYMBOL        i
+  -------         ENDDO         
+  C:008FH         LINE#         44
+  C:008FH         LINE#         45
+  C:008FH         LINE#         49
+  C:0093H         LINE#         50
+  C:0093H         LINE#         52
+  C:0096H         LINE#         53
+  C:009BH         LINE#         55
+  C:009DH         LINE#         56
+  C:009FH         LINE#         58
+  C:00A3H         LINE#         59
+  C:00A3H         LINE#         61
+  C:00A6H         LINE#         62
+  C:00ABH         LINE#         64
+  C:00ADH         LINE#         65
+  C:00AFH         LINE#         67
+  C:00B3H         LINE#         68
+  C:00B3H         LINE#         70
+  C:00B6H         LINE#         71
+  C:00BBH         LINE#         73
+  C:00BDH         LINE#         74
+  C:00BFH         LINE#         76
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/11/2023  21:52:07  PAGE 3
+
+
+  C:00C3H         LINE#         77
+  C:00C3H         LINE#         79
+  C:00C6H         LINE#         80
+  C:00CBH         LINE#         82
+  C:00CDH         LINE#         83
+  C:00CFH         LINE#         84
+  -------         ENDPROC       LED4_DISPLAY
+  C:00F3H         SYMBOL        L?0012
+  -------         PROC          L?0011
+  -------         ENDPROC       L?0011
+  C:00F3H         SYMBOL        L?0012
+  -------         PROC          _LED_OUT
+  D:0007H         SYMBOL        X
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:00FDH         LINE#         86
+  C:00FDH         LINE#         87
+  C:00FDH         LINE#         89
+  C:00FFH         LINE#         90
+  C:00FFH         LINE#         91
+  C:0109H         LINE#         92
+  C:010DH         LINE#         93
+  C:010FH         LINE#         94
+  C:0111H         LINE#         95
+  C:0113H         LINE#         96
+  -------         ENDPROC       _LED_OUT
+  -------         ENDMOD        MAIN
+
+Program Size: data=21.0 xdata=0 code=300
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
