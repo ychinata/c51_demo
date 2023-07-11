@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   MAIN                                                                  07/11/2023 21:52:07 PAGE 1   
+C51 COMPILER V9.54   MAIN                                                                  07/11/2023 23:16:46 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
@@ -9,119 +9,217 @@ COMPILER INVOKED BY: D:\Software\Keil\Keil_C51\C51\BIN\C51.EXE main.c OPTIMIZE(8
 line level    source
 
    1          #include <REGX52.H>
-   2           
-   3           unsigned char code fseg[]={0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90};
-   4           unsigned char code segbit[]={0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01};
-   5           unsigned char  disbuf[4]={0,0,0,0};
-   6          
-   7          
-   8           //-----------------------------------------------------------------------------
-   9          // 函数原形定义
-  10          #define uchar unsigned char
+   2          
+   3          //20230711 todo
+   4          // 合并LED4_Display和LED8_Display
+   5          // 新建nixietube.c
+   6           
+   7          unsigned char code fseg[]={0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90};
+   8          unsigned char code segbit[]={0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01};
+   9          //unsigned char  disbuf[4]={0,0,0,0};
+  10          unsigned char  disbuf[8]={0,0,0,0,0,0,0,0}; 
   11          
-  12          void main (void);                                       // 主函数
-  13          void LED4_Display (void);                       // LED显示
-  14          void LED_OUT(uchar X);                          // LED单字节串行移位函数
-  15          
-  16          unsigned char code LED_0F[];            // LED字模表
-  17          
-  18          sbit NIXIE_DIO = P1^0;                          //串行数据输入
-  19          sbit NIXIE_RCLK  = P1^1;                                //时钟脉冲信号——上升沿有效
-  20          sbit NIXIE_SCLK = P1^2;                         //打入信号————上升沿有效
+  12          
+  13           //-----------------------------------------------------------------------------
+  14          // 函数原形定义
+  15          #define uchar unsigned char
+  16          
+  17          void main (void);                                       // 主函数
+  18          void LED4_Display (void);                       // LED显示
+  19          void LED8_Display (void);                       // LED显示
+  20          void LED_OUT(uchar X);                          // LED单字节串行移位函数
   21          
-  22          //-----------------------------------------------------------------------------
-  23          // 全局变量
-  24          uchar LED[8];   //用于LED的8位显示缓存
-  25          
-  26          
-  27          //*****************************************************************************
-  28          // 主程序
-  29          //
-  30          void main (void) 
-  31          {
-  32   1      
-  33   1              LED[0]=1;
-  34   1              LED[1]=1;
-  35   1              LED[2]=1;
-  36   1              LED[3]=1;
-  37   1      
-  38   1              while(1)
-  39   1              {
-  40   2                      LED4_Display ();
-  41   2              } 
-  42   1      } 
-  43          
-  44          void LED4_Display (void)
-  45          {
-  46   1              unsigned char code *led_table;          // 查表指针
-  47   1              uchar i;
-  48   1              //显示第1位
-  49   1              led_table = LED_0F + LED[0];
-  50   1              i = *led_table;
-  51   1      
-  52   1              LED_OUT(i);                     
-  53   1              LED_OUT(0x01);          
-  54   1      
-C51 COMPILER V9.54   MAIN                                                                  07/11/2023 21:52:07 PAGE 2   
+  22          unsigned char code LED_0F[];            // LED字模表
+  23          
+  24          sbit NIXIE_DIO  = P1^3;                         //串行数据输入
+  25          sbit NIXIE_RCLK = P1^4;                         //时钟脉冲信号——上升沿有效
+  26          sbit NIXIE_SCLK = P1^5;                         //打入信号————上升沿有效
+  27          
+  28          //-----------------------------------------------------------------------------
+  29          // 全局变量
+  30          uchar LED[8];   //用于LED的8位显示缓存
+  31          
+  32          
+  33          //*****************************************************************************
+  34          // 主程序
+  35          //
+  36          void main (void) 
+  37          {
+  38   1      
+  39   1              LED[0]=1;
+  40   1              LED[1]=2;
+  41   1              LED[2]=3;
+  42   1              LED[3]=4;
+  43   1              LED[4]=5;
+  44   1              LED[5]=6;
+  45   1              LED[6]=7;
+  46   1              LED[7]=8;    
+  47   1      
+  48   1              while(1)
+  49   1              {
+  50   2                      LED4_Display();
+  51   2              //LED8_Display();
+  52   2              } 
+  53   1      } 
+  54          
+C51 COMPILER V9.54   MAIN                                                                  07/11/2023 23:16:46 PAGE 2   
 
-  55   1              NIXIE_RCLK = 0;
-  56   1              NIXIE_RCLK = 1;
-  57   1              //显示第2位
-  58   1              led_table = LED_0F + LED[1];
-  59   1              i = *led_table;
-  60   1      
-  61   1              LED_OUT(i);             
-  62   1              LED_OUT(0x02);          
+  55          //4位数码管显示
+  56          void LED4_Display(void)
+  57          {
+  58   1              unsigned char code *led_table;          // 查表指针
+  59   1              uchar i;
+  60   1              //显示第1位
+  61   1              led_table = LED_0F + LED[0];
+  62   1              i = *led_table;
   63   1      
-  64   1              NIXIE_RCLK = 0;
-  65   1              NIXIE_RCLK = 1;
-  66   1              //显示第3位
-  67   1              led_table = LED_0F + LED[2];
-  68   1              i = *led_table;
-  69   1      
-  70   1              LED_OUT(i);                     
-  71   1              LED_OUT(0x04);  
+  64   1              LED_OUT(i);                     
+  65   1              LED_OUT(0x01);          
+  66   1      
+  67   1              NIXIE_RCLK = 0;
+  68   1              NIXIE_RCLK = 1;
+  69   1              //显示第2位
+  70   1              led_table = LED_0F + LED[1];
+  71   1              i = *led_table;
   72   1      
-  73   1              NIXIE_RCLK = 0;
-  74   1              NIXIE_RCLK = 1;
-  75   1              //显示第4位
-  76   1              led_table = LED_0F + LED[3];
-  77   1              i = *led_table;
-  78   1      
-  79   1              LED_OUT(i);                     
-  80   1              LED_OUT(0x08);          
+  73   1              LED_OUT(i);             
+  74   1              LED_OUT(0x02);          
+  75   1      
+  76   1              NIXIE_RCLK = 0;
+  77   1              NIXIE_RCLK = 1;
+  78   1              //显示第3位
+  79   1              led_table = LED_0F + LED[2];
+  80   1              i = *led_table;
   81   1      
-  82   1              NIXIE_RCLK = 0;
-  83   1              NIXIE_RCLK = 1;
-  84   1      }
-  85          
-  86          void LED_OUT(uchar X)
-  87          {
-  88   1              uchar i;
-  89   1              for(i=8;i>=1;i--)
-  90   1              {
-  91   2                      if (X&0x80) NIXIE_DIO=1; else NIXIE_DIO=0;
-  92   2                      X<<=1;
-  93   2                      NIXIE_SCLK = 0;
-  94   2                      NIXIE_SCLK = 1;
-  95   2              }
+  82   1              LED_OUT(i);                     
+  83   1              LED_OUT(0x04);  
+  84   1      
+  85   1              NIXIE_RCLK = 0;
+  86   1              NIXIE_RCLK = 1;
+  87   1              //显示第4位
+  88   1              led_table = LED_0F + LED[3];
+  89   1              i = *led_table;
+  90   1      
+  91   1              LED_OUT(i);                     
+  92   1              LED_OUT(0x08);          
+  93   1      
+  94   1              NIXIE_RCLK = 0;
+  95   1              NIXIE_RCLK = 1;
   96   1      }
   97          
-  98          unsigned char code LED_0F[] = 
-  99          {// 0    1        2        3    4        5        6        7    8        9        A        b    C    d    E    F    -
- 100                  0xC0,0xF9,0xA4,0xB0,0x99,0x92,0x82,0xF8,0x80,0x90,0x8C,0xBF,0xC6,0xA1,0x86,0xFF,0xbf
- 101          };
- 102          
- 103          
- 104          
+  98          //8位数码管显示
+  99          void LED8_Display (void)
+ 100          {
+ 101   1              unsigned char code *led_table;          // 查表指针
+ 102   1              uchar i;
+ 103   1              //显示第1位
+ 104   1              led_table = LED_0F + LED[0];
+ 105   1              i = *led_table;
+ 106   1      
+ 107   1              LED_OUT(i);                     
+ 108   1              LED_OUT(0x01);          
+ 109   1      
+ 110   1              NIXIE_RCLK = 0;
+ 111   1              NIXIE_RCLK = 1;
+ 112   1              //显示第2位
+ 113   1              led_table = LED_0F + LED[1];
+ 114   1              i = *led_table;
+ 115   1      
+ 116   1              LED_OUT(i);             
+C51 COMPILER V9.54   MAIN                                                                  07/11/2023 23:16:46 PAGE 3   
+
+ 117   1              LED_OUT(0x02);          
+ 118   1      
+ 119   1              NIXIE_RCLK = 0;
+ 120   1              NIXIE_RCLK = 1;
+ 121   1              //显示第3位
+ 122   1              led_table = LED_0F + LED[2];
+ 123   1              i = *led_table;
+ 124   1      
+ 125   1              LED_OUT(i);                     
+ 126   1              LED_OUT(0x04);  
+ 127   1      
+ 128   1              NIXIE_RCLK = 0;
+ 129   1              NIXIE_RCLK = 1;
+ 130   1              //显示第4位
+ 131   1              led_table = LED_0F + LED[3];
+ 132   1              i = *led_table;
+ 133   1      
+ 134   1              LED_OUT(i);                     
+ 135   1              LED_OUT(0x08);          
+ 136   1      
+ 137   1              NIXIE_RCLK = 0;
+ 138   1              NIXIE_RCLK = 1;
+ 139   1              //显示第5位
+ 140   1              led_table = LED_0F + LED[4];
+ 141   1              i = *led_table;
+ 142   1      
+ 143   1              LED_OUT(i);                     
+ 144   1              LED_OUT(0x10);  
+ 145   1      
+ 146   1              NIXIE_RCLK = 0;
+ 147   1              NIXIE_RCLK = 1;
+ 148   1              //显示第6位
+ 149   1              led_table = LED_0F + LED[5];
+ 150   1              i = *led_table;
+ 151   1      
+ 152   1              LED_OUT(i);                     
+ 153   1              LED_OUT(0x20);  
+ 154   1      
+ 155   1              NIXIE_RCLK = 0;
+ 156   1              NIXIE_RCLK = 1;
+ 157   1              //显示第7位
+ 158   1              led_table = LED_0F + LED[6];
+ 159   1              i = *led_table;
+ 160   1      
+ 161   1              LED_OUT(i);                     
+ 162   1              LED_OUT(0x40);  
+ 163   1      
+ 164   1              NIXIE_RCLK = 0;
+ 165   1              NIXIE_RCLK = 1;
+ 166   1              //显示第8位
+ 167   1              led_table = LED_0F + LED[7];
+ 168   1              i = *led_table;
+ 169   1      
+ 170   1              LED_OUT(i);             
+ 171   1              LED_OUT(0x80);  
+ 172   1      
+ 173   1              NIXIE_RCLK = 0;
+ 174   1              NIXIE_RCLK = 1;
+ 175   1      }
+ 176          
+ 177          void LED_OUT(uchar X)
+ 178          {
+C51 COMPILER V9.54   MAIN                                                                  07/11/2023 23:16:46 PAGE 4   
+
+ 179   1              uchar i;
+ 180   1              for(i=8;i>=1;i--)
+ 181   1              {
+ 182   2                      if (X&0x80) 
+ 183   2                  NIXIE_DIO=1; 
+ 184   2              else 
+ 185   2                  NIXIE_DIO=0;
+ 186   2                      X<<=1;
+ 187   2                      NIXIE_SCLK = 0;
+ 188   2                      NIXIE_SCLK = 1;
+ 189   2              }
+ 190   1      }
+ 191          
+ 192          unsigned char code LED_0F[] = 
+ 193          {// 0    1        2        3    4        5        6        7    8        9        A        b    C    d    E    F    -
+ 194                  0xC0,0xF9,0xA4,0xB0,0x99,0x92,0x82,0xF8,0x80,0x90,0x8C,0xBF,0xC6,0xA1,0x86,0xFF,0xbf
+ 195          };
+ 196          
+ 197          
+ 198          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    115    ----
+   CODE SIZE        =    248    ----
    CONSTANT SIZE    =     35    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =     12    ----
+   DATA SIZE        =     16    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
