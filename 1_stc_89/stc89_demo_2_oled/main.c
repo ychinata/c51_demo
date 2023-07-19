@@ -48,10 +48,10 @@ void OLED_DemoFontSize16()
 {
     int charSize = 16; // 可排列4行
     // 0列0行字体16
-    OLED_ShowString(0,0,"Helloworld!",charSize);
+    OLED_ShowString(0,0,"Hello world!",charSize);
     OLED_ShowString(0,2,"MyFirstOLEDProg",charSize);
     OLED_ShowString(0,4,"BySTC12C5A60S2",charSize);
-    OLED_ShowString(0,6,"2022.09.13",charSize);
+    OLED_ShowString(0,6,"2023.07.19",charSize);
 }
 
 // 显示ASCII码

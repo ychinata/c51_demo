@@ -10,8 +10,11 @@
 #define OLED_MODE 0
 
 //I2C管脚定义
-sbit OLED_SCL = P1^6;     //D0（SCLK） 时钟 P1^0
-sbit OLED_SDIN = P1^7;    //D1（MOSI） 数据 P1^1
+//sbit OLED_SCL = P1^6;     //D0（SCLK） 时钟 P1^0
+//sbit OLED_SDIN = P1^7;    //D1（MOSI） 数据 P1^1
+// STC12核心板
+sbit OLED_SCL=P2^5;     // D0(SCLK) 时钟
+sbit OLED_SDIN=P2^3;    // D1（MOSI）数据
 
 
 #define OLED_CS_Clr()  OLED_CS=0
