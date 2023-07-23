@@ -19,6 +19,7 @@ Echo    --      P1^1;
 */
 
 //2023.6.20
+/*
 void main(void)
 {
     
@@ -34,7 +35,7 @@ void main(void)
     //OLED_ShowString(4,6,"2023.7.22",16);      
     OLED_ShowNum(0, 0, 0, 4, 16);
         
-    while(1)		       /*ÎÞÏÞÑ­»·*/
+    while(1)
     {       
 //        SERVO_Task();
 //        ULTRASONIC_Task();               
@@ -49,6 +50,7 @@ void main(void)
 
 }   
 
+*/
 
 void ULTRASONIC_Task(void)
 {

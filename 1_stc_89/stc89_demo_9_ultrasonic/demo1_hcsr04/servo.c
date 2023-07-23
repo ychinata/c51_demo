@@ -2,6 +2,7 @@
 #include <REGX52.H>
 #include "delay.h"
 #include "servo.h"
+#include "timer.h"
 
 sbit Sevro_moto_pwm = P3^7;	   	// 舵机信号线（橙色）
 
@@ -37,19 +38,20 @@ void time1()interrupt 3 using 2 // using可以不用
 }
 
 // 定时器0初始化
-void SERVO_Timer0_Init() 
-{
-	TMOD=0X10;
-	TH1=(65536-100)/256;	  //100US定时
-	TL1=(65536-100)%256;
-	TR1= 1;
-	ET1= 1;
-	EA = 1;
-}
+//void SERVO_Timer0_Init(void) 
+//{
+//	TMOD=0X10;
+//	TH1=(65536-100)/256;	  //100US定时
+//	TL1=(65536-100)%256;
+//	TR1= 1;
+//	ET1= 1;
+//	EA = 1;
+//}
 
 // 90度舵机
 void SERVO_Init() 
 {
+    TIMER1_Init(void);
     push_val=13;	  //舵机归中，机器执行指令有周期，所以PWM信号有误差
 	DELAY_ms(1000);   //延时1S让舵机转到其位置，停留一下
 }

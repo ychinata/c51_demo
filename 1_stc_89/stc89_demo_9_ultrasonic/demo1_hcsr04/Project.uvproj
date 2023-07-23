@@ -406,6 +406,11 @@
               <FileType>1</FileType>
               <FilePath>.\timer.c</FilePath>
             </File>
+            <File>
+              <FileName>hcsr04_debug1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\hcsr04_debug1.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
