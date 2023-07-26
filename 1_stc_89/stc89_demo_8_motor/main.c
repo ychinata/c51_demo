@@ -30,7 +30,8 @@ void main(void)
     while(1) {           
         //SERVO_Task();
         //DRV8833_Task();
-        CAR_MEC_Task();
+        //CAR_MEC_Task();
+        CAR_NormalTask();
                
     }
 

@@ -1,16 +1,39 @@
 //2023.6.24
 #include <REGX52.H>
+//#include <STC12C5A.H>
 #include "delay.h"
 #include "drv8833.h"
 #include "oled.h"
 
 unsigned int g_count = 0;
-unsigned int g_motor_speed = 0;
+unsigned int g_motor_speed = 0;     //控制四个轮子
+unsigned int g_motor_speedleft = 0; //控制左前/左后两个轮子的速度
+unsigned int g_motor_speedright = 0;//控制右前/右后两个轮子的速度
+
+
 // 轮子方向，向前为1，向后为0
 unsigned int g_motor_clokwiseflag_lf = 1;   // 左前轮
 unsigned int g_motor_clokwiseflag_lb = 1;   // 左后轮
 unsigned int g_motor_clokwiseflag_rf = 1;   // 右前轮
 unsigned int g_motor_clokwiseflag_rb = 1;   // 右后轮
+
+//speed为5走不动,10很慢,50挺快了
+void DRV8833_SetSpeed(unsigned int speed)
+{
+    g_motor_speed = speed;
+    DRV8833_SetSpeedLeft(speed);
+    DRV8833_SetSpeedRight(speed);
+}
+
+void DRV8833_SetSpeedLeft(unsigned int speed)
+{
+    g_motor_speedleft = speed;
+}
+
+void DRV8833_SetSpeedRight(unsigned int speed)
+{
+    g_motor_speedright = speed;
+}
 
 // DRV8833_1控制左侧轮子
 void DRV8833_1_Forward(void)
@@ -81,18 +104,25 @@ void DRV8833_LF_Forward(void)
     g_motor_clokwiseflag_lf = 1; 
 }
 
-void DRV8833_LB_Forward(void)
-{
-    DRV8833_1_BIN1 = 1;
-    DRV8833_1_BIN2 = 0;   
-    g_motor_clokwiseflag_lb = 1;    
-}
-
 void DRV8833_LF_Backward(void)
 {    
     DRV8833_1_AIN1 = 0;
     DRV8833_1_AIN2 = 1;
     g_motor_clokwiseflag_lf = 0;
+}
+
+void DRV8833_LF_Stop(void)
+{    
+    DRV8833_1_AIN1 = 0;
+    DRV8833_1_AIN2 = 0;
+    //g_motor_clokwiseflag_lf = 0;
+}
+
+void DRV8833_LB_Forward(void)
+{
+    DRV8833_1_BIN1 = 1;
+    DRV8833_1_BIN2 = 0;   
+    g_motor_clokwiseflag_lb = 1;    
 }
 
 void DRV8833_LB_Backward(void)
@@ -102,18 +132,18 @@ void DRV8833_LB_Backward(void)
     g_motor_clokwiseflag_lb = 0;    
 }
 
+void DRV8833_LB_Stop(void)
+{    
+    DRV8833_1_BIN1 = 1;
+    DRV8833_1_BIN2 = 1;   
+    //g_motor_clokwiseflag_lb = 0;    
+}
+
 void DRV8833_RF_Forward(void)
 {    
     DRV8833_2_AIN1 = 0;
     DRV8833_2_AIN2 = 1;
     g_motor_clokwiseflag_rf = 1;
-}
-
-void DRV8833_RB_Forward(void)
-{    
-    DRV8833_2_BIN1 = 0;
-    DRV8833_2_BIN2 = 1;   
-    g_motor_clokwiseflag_rb = 1;    
 }
 
 void DRV8833_RF_Backward(void)
@@ -123,6 +153,20 @@ void DRV8833_RF_Backward(void)
     g_motor_clokwiseflag_rf = 0;
 }
 
+void DRV8833_RF_Stop(void)
+{    
+    DRV8833_2_AIN1 = 1;
+    DRV8833_2_AIN2 = 1;
+    //g_motor_clokwiseflag_rf = 0;
+}
+
+void DRV8833_RB_Forward(void)
+{    
+    DRV8833_2_BIN1 = 0;
+    DRV8833_2_BIN2 = 1;   
+    g_motor_clokwiseflag_rb = 1;    
+}
+
 void DRV8833_RB_Backward(void)
 {    
     DRV8833_2_BIN1 = 1;
@@ -130,6 +174,12 @@ void DRV8833_RB_Backward(void)
     g_motor_clokwiseflag_rb = 0;      
 }
 
+void DRV8833_RB_Stop(void)
+{    
+    DRV8833_2_BIN1 = 1;
+    DRV8833_2_BIN2 = 1;   
+    //g_motor_clokwiseflag_rb = 0;      
+}
 
 #endif // 单轮控制-end
 
@@ -177,6 +227,8 @@ void DRV8833_Task_ErgodicVelocity(void)
 void time1()interrupt 3 using 2 // using可以不用
 {	
     int pwm_on_off;
+    int pwm_on_off_left;
+    int pwm_on_off_right;
     TH1=(65536-100)/256;	  //100US定时, 0.1ms
     TL1=(65536-100)%256;
 
@@ -184,48 +236,46 @@ void time1()interrupt 3 using 2 // using可以不用
     if(g_count==100)        
         g_count=0;  
     
-    if(g_count > 0 && g_count <= g_motor_speed) {
+    // PWM赋值-BGN
+    if(g_count > 0 && g_count <= g_motor_speed)
         pwm_on_off = 1;     // 输出高电平                              
-    } else {
-        pwm_on_off = 0;     // 输出低电平  
-    }     
-
-//        // 左轮正转
-//        DRV8833_1_AIN1 = 0;
-//        DRV8833_1_BIN1 = 0;
-//        // 右轮正转(跟左轮相反)
-//        DRV8833_2_AIN2 = 0;
-//        DRV8833_2_BIN2 = 0;
-//        // 左轮反转
-//        DRV8833_1_AIN2 = 0;
-//        DRV8833_1_BIN2 = 0;
-//        // 右轮正转(跟左轮相反)
-//        DRV8833_2_AIN1 = 0;
-//        DRV8833_2_BIN1 = 0;  
+    else
+        pwm_on_off = 0;     // 输出低电平      
+    
+    if(g_count > 0 && g_count <= g_motor_speedleft)
+        pwm_on_off_left = 1;     // 输出高电平                              
+    else
+        pwm_on_off_left = 0;     // 输出低电平  
+    
+    if(g_count > 0 && g_count <= g_motor_speedright)
+        pwm_on_off_right = 1;     // 输出高电平                              
+    else
+        pwm_on_off_right = 0;     // 输出低电平  
+    // PWM赋值-END    
 
     // 左前轮正转
     if (g_motor_clokwiseflag_lf == 1) {
-        DRV8833_1_AIN1 = pwm_on_off;
+        DRV8833_1_AIN1 = pwm_on_off_left;
     } else {
-        DRV8833_1_AIN2 = pwm_on_off;
+        DRV8833_1_AIN2 = pwm_on_off_left;
     }
     // 左后轮转
     if (g_motor_clokwiseflag_lb == 1) {
-        DRV8833_1_BIN1 = pwm_on_off;
+        DRV8833_1_BIN1 = pwm_on_off_left;
     } else {
-        DRV8833_1_BIN2 = pwm_on_off;
+        DRV8833_1_BIN2 = pwm_on_off_left;
     }
     // 右前轮正转(跟左轮相反)
     if (g_motor_clokwiseflag_rf == 1) {
-        DRV8833_2_AIN2 = pwm_on_off;
+        DRV8833_2_AIN2 = pwm_on_off_right;
     } else {
-        DRV8833_2_AIN1 = pwm_on_off;
+        DRV8833_2_AIN1 = pwm_on_off_right;
     }
     // 右前轮正转(跟左轮相反)
     if (g_motor_clokwiseflag_rb == 1) {        
-        DRV8833_2_BIN2 = pwm_on_off; 
+        DRV8833_2_BIN2 = pwm_on_off_right; 
     } else {
-        DRV8833_2_BIN1 = pwm_on_off;   
+        DRV8833_2_BIN1 = pwm_on_off_right;   
     } 
 }
 

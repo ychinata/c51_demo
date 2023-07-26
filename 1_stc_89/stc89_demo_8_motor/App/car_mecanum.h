@@ -11,6 +11,7 @@ void CAR_MEC_RotateClockwise(void);
 void CAR_MEC_RotateAnticlockwise(void);
 
 
+void CAR_NormalTask(void);
 void CAR_MEC_Task(void);
 
 #endif

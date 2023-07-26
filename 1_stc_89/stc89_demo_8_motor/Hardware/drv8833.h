@@ -39,6 +39,11 @@ sbit DRV8833_2_STBY = P1^3;
 sbit DRV8833_2_BIN1 = P1^4;
 sbit DRV8833_2_BIN2 = P1^5;
 
+//函数声明
+
+void DRV8833_SetSpeed(unsigned int speed);
+void DRV8833_SetSpeedLeft(unsigned int speed);
+void DRV8833_SetSpeedRight(unsigned int speed);
 
 void DRV8833_Timer0_Init();
 void DRV8833_Init(void);
@@ -59,7 +64,13 @@ void DRV8833_RF_Forward(void);
 void DRV8833_RB_Forward(void);
 void DRV8833_RF_Backward(void);
 void DRV8833_RB_Backward(void);
-
+//单轮stop-无效
+/*
+void DRV8833_LF_Stop(void);
+void DRV8833_LB_Stop(void);
+void DRV8833_RF_Stop(void);
+void DRV8833_RB_Stop(void);
+*/
 void DRV8833_Task(void);
 
 #endif
