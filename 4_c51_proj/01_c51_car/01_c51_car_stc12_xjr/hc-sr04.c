@@ -1,6 +1,7 @@
 #include <STC12C5A60S2.H>
 #include "HC-SR04.H"
 #include "delay.h"
+#include "LCD.H"
 
 double Distance_HC_SR04(void){
     uint8 i;
@@ -15,7 +16,7 @@ double Distance_HC_SR04(void){
         TL0=0;        
         TR0=0;
 
-        //LCD_Check_Busy(); 
+        LCD_Check_Busy(); 
     
         Trig=1;
         delay(2);
@@ -38,7 +39,9 @@ double Distance_HC_SR04(void){
 //            }        
 //        }
 //    }
-    for(i=0;i<1;i++){time_sum+=time_ALL[i];}
+    for(i=0;i<1;i++){
+        time_sum+=time_ALL[i];
+    }
     time_sum_av=(time_sum/1);//计算时间平均值
     
 //    for(i=0;i<10;i++){time_sum+=time_10[i];}
