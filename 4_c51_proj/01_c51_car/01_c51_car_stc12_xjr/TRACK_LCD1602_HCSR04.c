@@ -7,6 +7,7 @@ uint16 S;                //æ‡¿Î±‰¡ø
 
 void main(void)
 {
+    uint8 i;
     uchar8 dis_S[6];
     uchar8 Distance_show[]="Distance:";
     uchar8 Distance_Num_show[]="cm"; 

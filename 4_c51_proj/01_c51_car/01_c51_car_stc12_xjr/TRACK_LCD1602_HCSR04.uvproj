@@ -381,6 +381,11 @@
               <FileType>1</FileType>
               <FilePath>.\TRACK_LCD1602_HCSR04.c</FilePath>
             </File>
+            <File>
+              <FileName>hc-sr04.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\hc-sr04.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
