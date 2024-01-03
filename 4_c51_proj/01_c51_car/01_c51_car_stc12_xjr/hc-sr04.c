@@ -1,6 +1,6 @@
 #include <STC12C5A60S2.H>
 #include "HC-SR04.H"
-//#include "delay.h"
+#include "delay.h"
 
 double Distance_HC_SR04(void){
     uint8 i;
@@ -18,7 +18,7 @@ double Distance_HC_SR04(void){
         //LCD_Check_Busy(); 
     
         Trig=1;
-        //delay(2);
+        delay(2);
         Trig=0;//20us延时，开始工作
     
         while(!Echo);//高电平开启定时器
