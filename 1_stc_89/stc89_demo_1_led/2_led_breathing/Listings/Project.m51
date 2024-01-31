@@ -1,8 +1,9 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        12/09/2021  16:03:07  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        01/31/2024  10:17:34  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
-D:\SOFTWARE\KEIL\C51\BIN\BL51.EXE .\Objects\main.obj TO .\Objects\Project PRINT (.\Listings\Project.m51) RAMSIZE (256)
+D:\SOFTWARE\KEIL\KEIL_ARM\C51\BIN\BL51.EXE .\Objects\main.obj TO .\Objects\Project PRINT (.\Listings\Project.m51) RAMSIZ
+>> E (256)
 
 
 MEMORY MODEL: SMALL
@@ -10,7 +11,7 @@ MEMORY MODEL: SMALL
 
 INPUT MODULES INCLUDED:
   .\Objects\main.obj (MAIN)
-  D:\SOFTWARE\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\SOFTWARE\KEIL\KEIL_ARM\C51\LIB\C51S.LIB (?C_STARTUP)
 
 
 LINK MAP OF MODULE:  .\Objects\Project (MAIN)
@@ -58,10 +59,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\Project (MAIN)
   C:003CH         PUBLIC        _Delay
   -------         PROC          L?0020
   -------         ENDPROC       L?0020
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/31/2024  10:17:34  PAGE 2
+
+
   -------         PROC          _DELAY
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/09/2021  16:03:07  PAGE 2
-
-
   D:0006H         SYMBOL        t
   C:003CH         LINE#         14
   C:003CH         LINE#         15

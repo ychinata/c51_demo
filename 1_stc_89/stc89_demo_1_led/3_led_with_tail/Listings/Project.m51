@@ -1,0 +1,223 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        01/30/2024  23:34:36  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\SOFTWARE\KEIL\KEIL_ARM\C51\BIN\BL51.EXE .\Objects\main.obj TO .\Objects\Project PRINT (.\Listings\Project.m51) RAMSIZ
+>> E (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\main.obj (MAIN)
+  D:\SOFTWARE\KEIL\KEIL_ARM\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\SOFTWARE\KEIL\KEIL_ARM\C51\LIB\C51S.LIB (?C?COPY)
+  D:\SOFTWARE\KEIL\KEIL_ARM\C51\LIB\C51S.LIB (?C?CLDPTR)
+  D:\SOFTWARE\KEIL\KEIL_ARM\C51\LIB\C51S.LIB (?C?CLDOPTR)
+  D:\SOFTWARE\KEIL\KEIL_ARM\C51\LIB\C51S.LIB (?C?CSTPTR)
+  D:\SOFTWARE\KEIL\KEIL_ARM\C51\LIB\C51S.LIB (?C?CSTOPTR)
+
+
+LINK MAP OF MODULE:  .\Objects\Project (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0030H     UNIT         ?DT?MAIN
+            DATA    0038H     0005H     UNIT         _DATA_GROUP_
+            IDATA   003DH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0170H     UNIT         ?C?LIB_CODE
+            CODE    0173H     0097H     UNIT         ?PR?MAIN?MAIN
+            CODE    020AH     004DH     UNIT         ?PR?_UPDATE_LEDS?MAIN
+            CODE    0257H     0049H     UNIT         ?PR?_SHIFT_RIGHT_STRIP?MAIN
+            CODE    02A0H     0040H     UNIT         ?PR?_SHIFT_LEFT_STRIP?MAIN
+            CODE    02E0H     0035H     UNIT         ?PR?SHIFT_CENTER_STRIP?MAIN
+            CODE    0315H     0020H     UNIT         ?CO?MAIN
+            CODE    0335H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\Project (MAIN)
+
+
+SEGMENT                               DATA_GROUP 
+  +--> CALLED SEGMENT               START    LENGTH
+---------------------------------------------------
+?C_C51STARTUP                       -----    -----
+  +--> ?PR?MAIN?MAIN
+
+?PR?MAIN?MAIN                       0038H    0001H
+  +--> ?CO?MAIN
+  +--> ?PR?_SHIFT_RIGHT_STRIP?MAIN
+  +--> ?PR?_UPDATE_LEDS?MAIN
+  +--> ?PR?_SHIFT_LEFT_STRIP?MAIN
+  +--> ?PR?SHIFT_CENTER_STRIP?MAIN
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/30/2024  23:34:36  PAGE 2
+
+
+
+?PR?_SHIFT_RIGHT_STRIP?MAIN         0039H    0003H
+
+?PR?_UPDATE_LEDS?MAIN               0039H    0004H
+
+?PR?_SHIFT_LEFT_STRIP?MAIN          0039H    0004H
+
+?PR?SHIFT_CENTER_STRIP?MAIN         -----    -----
+  +--> ?PR?_SHIFT_LEFT_STRIP?MAIN
+  +--> ?PR?_SHIFT_RIGHT_STRIP?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\Project (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  C:0212H         PUBLIC        _update_leds
+  D:0008H         PUBLIC        duties
+  D:0018H         PUBLIC        duties_right
+  D:00B8H         PUBLIC        IP
+  C:02E0H         PUBLIC        shift_center_strip
+  D:0028H         PUBLIC        duties_left
+  C:0173H         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0257H         PUBLIC        _shift_right_strip
+  C:02A0H         PUBLIC        _shift_left_strip
+  C:0325H         PUBLIC        strip_init_right
+  C:0315H         PUBLIC        strip_init_left
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          _SHIFT_RIGHT_STRIP
+  D:0039H         SYMBOL        buf
+  D:0005H         SYMBOL        len
+  -------         DO            
+  D:0006H         SYMBOL        i
+  D:0007H         SYMBOL        t
+  -------         ENDDO         
+  C:0257H         LINE#         24
+  C:025DH         LINE#         25
+  C:026DH         LINE#         26
+  C:0276H         LINE#         27
+  C:0293H         LINE#         28
+  C:0296H         LINE#         29
+  -------         ENDPROC       _SHIFT_RIGHT_STRIP
+  -------         PROC          _SHIFT_LEFT_STRIP
+  D:0039H         SYMBOL        buf
+  D:0005H         SYMBOL        len
+  -------         DO            
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/30/2024  23:34:36  PAGE 3
+
+
+  D:0006H         SYMBOL        i
+  D:0007H         SYMBOL        n
+  D:003CH         SYMBOL        t
+  -------         ENDDO         
+  C:02A0H         LINE#         32
+  C:02A6H         LINE#         33
+  C:02AEH         LINE#         34
+  C:02B5H         LINE#         35
+  C:02CDH         LINE#         36
+  C:02D0H         LINE#         37
+  -------         ENDPROC       _SHIFT_LEFT_STRIP
+  -------         PROC          SHIFT_CENTER_STRIP
+  -------         DO            
+  D:0007H         SYMBOL        i
+  -------         ENDDO         
+  C:02E0H         LINE#         40
+  C:02E0H         LINE#         42
+  C:02EBH         LINE#         43
+  C:02F4H         LINE#         44
+  C:02F6H         LINE#         45
+  C:0310H         LINE#         46
+  C:0314H         LINE#         47
+  -------         ENDPROC       SHIFT_CENTER_STRIP
+  C:020AH         SYMBOL        L?0040
+  -------         PROC          L?0039
+  -------         ENDPROC       L?0039
+  C:020AH         SYMBOL        L?0040
+  -------         PROC          _UPDATE_LEDS
+  D:0039H         SYMBOL        cycle
+  D:003AH         SYMBOL        values
+  -------         DO            
+  D:0006H         SYMBOL        i
+  D:0007H         SYMBOL        j
+  D:0005H         SYMBOL        value
+  -------         ENDDO         
+  C:0212H         LINE#         56
+  C:021AH         LINE#         58
+  C:0221H         LINE#         59
+  C:0229H         LINE#         60
+  C:022BH         LINE#         61
+  C:022CH         LINE#         62
+  C:0240H         LINE#         63
+  C:024DH         LINE#         64
+  C:024DH         LINE#         65
+  C:0251H         LINE#         66
+  C:0253H         LINE#         67
+  C:0256H         LINE#         68
+  C:0256H         LINE#         69
+  -------         ENDPROC       _UPDATE_LEDS
+  -------         PROC          MAIN
+  -------         DO            
+  D:0038H         SYMBOL        i
+  -------         ENDDO         
+  C:0173H         LINE#         71
+  C:0173H         LINE#         73
+  C:0173H         LINE#         75
+  C:0186H         LINE#         77
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/30/2024  23:34:36  PAGE 4
+
+
+  C:0189H         LINE#         78
+  C:0194H         LINE#         79
+  C:0197H         LINE#         80
+  C:01A0H         LINE#         81
+  C:01B3H         LINE#         82
+  C:01B6H         LINE#         83
+  C:01C1H         LINE#         84
+  C:01C4H         LINE#         86
+  C:01CDH         LINE#         87
+  C:01E0H         LINE#         88
+  C:01F3H         LINE#         89
+  C:0200H         LINE#         90
+  C:0203H         LINE#         91
+  C:0206H         LINE#         92
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        ?C?COPY
+  C:00D3H         PUBLIC        ?C?COPY
+  -------         ENDMOD        ?C?COPY
+
+  -------         MODULE        ?C?CLDPTR
+  C:00F9H         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?CLDOPTR
+  C:0112H         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+  -------         MODULE        ?C?CSTPTR
+  C:013FH         PUBLIC        ?C?CSTPTR
+  -------         ENDMOD        ?C?CSTPTR
+
+  -------         MODULE        ?C?CSTOPTR
+  C:0151H         PUBLIC        ?C?CSTOPTR
+  -------         ENDMOD        ?C?CSTOPTR
+
+Program Size: data=62.0 xdata=0 code=833
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
