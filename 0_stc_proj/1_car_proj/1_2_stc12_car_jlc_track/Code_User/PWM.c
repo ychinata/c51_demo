@@ -81,6 +81,7 @@ void PWM_Set_ZhanKongBi(unsigned char a)
 // PWM定时器中断响应函数
 void TM0_Isr(void) interrupt 1
 {
+    // PWM_IO_1初始化为0，先进入else分支，拉高IO，起定时器；定时器结束，进入if分支，拉低IO，起定时器。这样的PWM控制不够精细。
 	if(PWM_IO_1)
 	{
 		LF_A_IO=0;
