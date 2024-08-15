@@ -16,6 +16,7 @@
 extern unsigned char LF_A,LF_B,LB_A,LB_B,RF_A,RF_B,RB_A,RB_B;
 static unsigned int PWM_H=0,PWM_L=0;//高电平时间和低电平时间
 static unsigned char PWM_IO_1=0;
+
 //初始化PWM定时器
 void PWM_Init(void)
 {
@@ -47,8 +48,7 @@ void PWM_Set_ZhanKongBi(unsigned char a)
 	float ZhanKongBi;
 	ZhanKongBi = 100 - a;
 	
-	if(a<2)
-	{
+	if(a<2) {       // 若设置占空比<2，则小车不动，不需要开启定时器
 		LF_A_IO=0;
 		LF_B_IO=0;
 		LB_A_IO=0;
@@ -59,9 +59,7 @@ void PWM_Set_ZhanKongBi(unsigned char a)
 		RB_B_IO=0;
 		PWM_IO_1=0;
 		TR0 = 0;
-	}
-	else if(a>98)
-	{
+	} else if(a>98) {   // 若设置占空比>98，则小车全速，需要开启定时器
 		LF_A_IO=1;
 		LF_B_IO=1;
 		LB_A_IO=1;
@@ -72,15 +70,15 @@ void PWM_Set_ZhanKongBi(unsigned char a)
 		RB_B_IO=1;
 		PWM_IO_1=1;
 		TR0 = 0;
-	}
-	else
-	{
+	} else {            // 正常的占空比设置流程，需要开启定时器
 		ZhanKongBi = 10000 * ZhanKongBi / 100 ;
 		PWM_H = 0XFFFF - ZhanKongBi;
 		PWM_L = 0XFFFF - 10000 + ZhanKongBi;
 		TR0 = 1;
 	}
 }
+
+// PWM定时器中断响应函数
 void TM0_Isr(void) interrupt 1
 {
 	if(PWM_IO_1)
@@ -96,10 +94,8 @@ void TM0_Isr(void) interrupt 1
 		PWM_IO_1=0;
 		TL0 = PWM_H;
 		TH0 = PWM_H>>8;
-	}
-	else
-	{
-		if(LF_A)
+	} else {
+		if(LF_A)    // 四个轮子对应的8个IO口，哪个被设置为1，就进行占空比配置
 			LF_A_IO=1;
 		if(LF_B)
 			LF_B_IO=1;
@@ -120,11 +116,3 @@ void TM0_Isr(void) interrupt 1
 		TH0 = PWM_L>>8;
 	}
 }
-//
-
-
-
-
-
-
-

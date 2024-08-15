@@ -8,6 +8,7 @@ void Tim1_Isr(void) interrupt 3
 	TH1 = 0xFC;//设置定时初值
 	SYS_TimerInterrupt_App();
 }
+
 void main(void)
 {
 	

@@ -107,18 +107,7 @@ void Motor_Left(void)
     Motor_LB(MOTOR_DIR_B);	
     // ÓÒÂÖÇ°½ø
     Motor_RF(MOTOR_DIR_F);
-    Motor_RB(MOTOR_DIR_F);     
-//	 LF_A=0;  
-//	 LF_B=1;	 
-//    
-//	 LB_A=0;	 
-//	 LB_B=1;
-//	
-//	 RF_A=1;   
-//	 RF_B=0;	
-//    
-//	 RB_A=1;	 
-//	 RB_B=0;	 
+    Motor_RB(MOTOR_DIR_F);      
 }
 
 /*******************************************************************************
@@ -132,15 +121,5 @@ void Motor_Right(void)
     Motor_LB(MOTOR_DIR_F);	
     // ÓÒÂÖºóÍË
     Motor_RF(MOTOR_DIR_B);
-    Motor_RB(MOTOR_DIR_B);       
-//	 LF_A=1;  
-//	 LF_B=0;
-//    
-//	 LB_A=1;	 
-//	 LB_B=0;
-//	
-//	 RF_A=0;   
-//	 RF_B=1;	    
-//	 RB_A=0;	 
-//	 RB_B=1;	 
+    Motor_RB(MOTOR_DIR_B);       	 
 }

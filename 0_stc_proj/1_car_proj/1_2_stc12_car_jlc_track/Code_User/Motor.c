@@ -11,8 +11,49 @@
 //#define RB_A P06//右后电机A
 //#define RB_B P07//右后电机B
 
+#define MOTOR_DIR_F 0
+#define MOTOR_DIR_B 1
 
 unsigned char LF_A,LF_B,LB_A,LB_B,RF_A,RF_B,RB_A,RB_B;
+void Motor_LF(unsigned char dir) {
+    if (dir == MOTOR_DIR_F) {
+        LF_A=1;   
+        LF_B=0;	        
+    } else {    
+        LF_A=0;   
+        LF_B=1;	       
+    }
+}
+
+void Motor_LB(unsigned char dir) {
+    if (dir == MOTOR_DIR_F) {
+        LB_A=0;	 
+        LB_B=1;	             
+    } else {    
+        LB_A=1;	 
+        LB_B=0;	 
+    }
+}
+
+void Motor_RF(unsigned char dir) {
+    if (dir == MOTOR_DIR_F) {
+        RF_A=1;   
+        RF_B=0;	        
+    } else {    
+        RF_A=0;   
+        RF_B=1;	       
+    }
+}
+
+void Motor_RB(unsigned char dir) {
+    if (dir == MOTOR_DIR_F) {
+        RB_A=1;   
+        RB_B=0;	        
+    } else {    
+        RB_A=0;	 
+        RB_B=1;	        
+    }
+}
 
 /*******************************************************************************
 * 函 数 名         : Motor_Stop()
@@ -35,16 +76,12 @@ void Motor_Stop(void)
 * 函数功能		     : 小车前进函数
 *******************************************************************************/
 void Motor_Forward(void)
-{
-	 LF_A=1;  
-	 LF_B=0;	
-	 LB_A=1;	 
-	 LB_B=0;	
-	
-	 RF_A=1;   
-	 RF_B=0;	 
-	 RB_A=1;	 
-	 RB_B=0;	 
+{ 
+    Motor_LF(MOTOR_DIR_F);
+    Motor_LB(MOTOR_DIR_F);	
+
+    Motor_RF(MOTOR_DIR_F);
+    Motor_RB(MOTOR_DIR_F);    
 }
 
 /*******************************************************************************
@@ -52,16 +89,12 @@ void Motor_Forward(void)
 * 函数功能		     : 小车后退函数
 *******************************************************************************/
 void Motor_Back(void)
-{
-	 LF_A=0;  
-	 LF_B=1;	
-	 LB_A=0;	 
-	 LB_B=1;		
-	
-	 RF_A=0;   
-	 RF_B=1;	 
-	 RB_A=0;	 
-	 RB_B=1;	 
+{    
+    Motor_LF(MOTOR_DIR_B);
+    Motor_LB(MOTOR_DIR_B);	
+
+    Motor_RF(MOTOR_DIR_B);
+    Motor_RB(MOTOR_DIR_B); 
 }
 
 /*******************************************************************************
@@ -70,15 +103,12 @@ void Motor_Back(void)
 *******************************************************************************/
 void Motor_Left(void)
 {
-	 LF_A=0;  
-	 LF_B=1;	 
-	 LB_A=0;	 
-	 LB_B=1;
-	
-	 RF_A=1;   
-	 RF_B=0;	 
-	 RB_A=1;	 
-	 RB_B=0;	 
+    // 左轮后退
+    Motor_LF(MOTOR_DIR_B);
+    Motor_LB(MOTOR_DIR_B);	
+    // 右轮前进
+    Motor_RF(MOTOR_DIR_F);
+    Motor_RB(MOTOR_DIR_F);      
 }
 
 /*******************************************************************************
@@ -87,13 +117,10 @@ void Motor_Left(void)
 *******************************************************************************/
 void Motor_Right(void)
 {
-	 LF_A=1;  
-	 LF_B=0;	 
-	 LB_A=1;	 
-	 LB_B=0;
-	
-	 RF_A=0;   
-	 RF_B=1;	 
-	 RB_A=0;	 
-	 RB_B=1;	 
+    // 左轮前进
+    Motor_LF(MOTOR_DIR_F);
+    Motor_LB(MOTOR_DIR_F);	
+    // 右轮后退
+    Motor_RF(MOTOR_DIR_B);
+    Motor_RB(MOTOR_DIR_B);       	 
 }

@@ -7,6 +7,7 @@
 #define	Left_Flow		P24
 #define	Right_Flow 	P25
 
+// 实现循迹主要逻辑
 void APP_Loop(void)
 {
 	if((Left_Flow==1) & (Right_Flow==1))
